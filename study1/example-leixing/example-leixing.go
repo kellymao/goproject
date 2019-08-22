@@ -223,8 +223,28 @@ func main(){
 
 	// for range 字符串
 
+	var str1 string="hello you 中国"
 
-	
+	fmt.Printf("%v 的字节长度： len(str1) 为 %d \n ", str1,len(str1))
+	fmt.Printf("%v 的字符长度： len([]rune(str1)) 为 %d \n" , str1,len([]rune(str1)))
+
+	for idx,v := range str1{
+		/*
+
+		fmt.Printf("[%v]长度为 %d",len(v))
+		报错 invalid argument v (type rune) for len
+
+		fmt.Printf("[%v]长度为 %d",len([]byte(v)))
+		报错cannot convert v (type rune) to type []byte
+
+
+		 */
+
+		fmt.Printf("第[%d]个字符 [%c]长度为 %d\n",idx,v,len([]byte(string(v))))
+
+	}
+
+
 
 
 
