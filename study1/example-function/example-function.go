@@ -2,6 +2,12 @@ package main
 
 import "fmt"
 
+import "bufio"
+import "os"
+import "strings"
+
+import "errors"
+
 // 函数也是一种类型: type 定义的函数类型
 
 type add_func func( a int, b int) int
@@ -55,15 +61,18 @@ func add1(a int,arg ...int) int {
 
 func total_count(str string)(wordcount,spacecount,numbercount,charcount int){
 
+	str_rune := []rune(str)
 
-	for _,v := range str {
+	fmt.Println(len(str_rune))
 
+	for i,v := range str_rune {
+		fmt.Println(i)
 		switch {
 		case v >= 'a' && v <= 'z':
 			fallthrough
 		case v >= 'A' && v <='Z':
 			wordcount++
-		case v >=  0 && v <=9:
+		case v >=  '0' && v <='9':
 			numbercount++
 		case v ==' ':
 			spacecount++
@@ -78,6 +87,10 @@ func total_count(str string)(wordcount,spacecount,numbercount,charcount int){
 	}
 
 
+func initconfig()(err error) {
+
+	return errors.New("init config failed")
+}
 
 
 func main(){
@@ -103,10 +116,63 @@ func main(){
 
 	fmt.Println(add1(1,2,3,5,6))
 
-	var str1 string="hello world 中古人你好"
-	wordcount,spacecount,numbercount,charcount := total_count(str1)
+	//var str1 string="hello world 中古人你好"
+
+	reader :=bufio.NewReader(os.Stdin)
+
+	result, _, err := reader.ReadLine()
+	if err != nil{
+		fmt.Println("read from console err.",err)
+		return
+	}
+
+	//result 是[]byte 类型
+	str2 := string(result)
+	wordcount,spacecount,numbercount,charcount := total_count(str2)
 
 	fmt.Println(wordcount,spacecount,numbercount,charcount)
+
+	ret:=strings.Split(str2,"中")    //你  678是  一个人aaa中国  人123 89
+	fmt.Println(ret)
+
+	ret1 := strings.TrimSpace(ret[0])
+	ret1  =strings.Replace(ret1," ","", -1) //替换字符串中的空格
+	ret2 :=strings.TrimSpace(ret[1])
+	fmt.Println(ret1,ret2)
+
+
+
+	// 内置函数 new 和 make, append
+
+
+	i :=new(int)
+	fmt.Println(i)
+
+	*i = 90
+	fmt.Println(*i)
+
+	k :=new([]int)
+	fmt.Println(k)
+	*k = []int{1,2,3,5,6}
+	fmt.Println(k,*k)
+
+
+	var j []int
+	j = append(j,10,20,30)
+	j = append(j,j...)
+
+	fmt.Println(j)
+
+	/*
+	0xc000014110
+	90
+	&[]
+	&[1 2 3 5 6] [1 2 3 5 6]
+	[10 20 30 10 20 30]
+	 */
+
+   // recover() 函数
+
 
 
 }
