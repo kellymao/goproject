@@ -175,4 +175,5 @@ func main(){
 
 
 
+   // []byte 可以和 string 相互转换 ，[]rune 可以和string 相互转换
 }
