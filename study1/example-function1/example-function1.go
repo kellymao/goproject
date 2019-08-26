@@ -3,8 +3,11 @@ package main
 import (
 	"fmt"
 	"strings"
+	"bytes"
 )
 
+import "os"
+import "strconv"
 
 // 阶乘 - 递归
 func jiecheng(n uint64) uint64 {
@@ -131,6 +134,156 @@ func (t funchander) call(v interface{}){
 }
 
 
+// 可变参数
+
+func process_arg(arg ...interface{}){
+
+	var arg_list []interface{}
+
+	//arg_list = make([]interface{},10)
+	arg_list = append(arg_list,arg...)   // 将arg可变参数切片完整传递给下一个函数
+
+	fmt.Printf("%v \n ",arg_list)
+
+	var b bytes.Buffer
+
+	for _, v := range arg{
+
+		b.WriteString("type is ")
+		switch v.(type){
+			case int:
+				b.WriteString("int")
+			case string:
+				b.WriteString("string")
+			//case struct:
+			//	b.WriteString("struct")
+			default:
+
+				b.WriteString("other")
+
+
+
+
+	}
+		b.WriteString(". value is ")
+		b.WriteString(fmt.Sprintf("%v",v))  //格式化字符串
+		b.WriteString("\n")
+
+
+	}
+
+	fmt.Println(b.String())
+
+}
+
+
+// defer 关闭文件
+
+func process_file(file string) int64{
+
+	f,err:=os.Open(file)
+	if err != nil{
+
+		fmt.Println("打开文件错误",err)
+		return 0
+	}
+
+	defer f.Close()
+
+	info,err:=f.Stat()
+	if err!= nil{
+
+		fmt.Println(err)
+		return 0
+	}
+
+	return info.Size()
+}
+
+
+// 自定义 error
+
+
+type ParseError struct{
+
+	name string
+	str string
+
+}
+
+func (p *ParseError) Error() string {
+
+
+	return fmt.Sprintf("%s %s",p.name,p.str)
+
+
+}
+
+
+func process_parserr(v interface{}) (bool , error)  {
+
+
+	err := &ParseError{name:"zhangsan",str:"parse error"}
+
+	switch v.(type){
+
+	case string:
+		return true , nil
+
+	case invoke:
+		return false, err
+
+	default:
+		return false, err
+
+	}
+
+
+
+
+
+
+}
+// panic defer recover
+
+/*
+defer +recover 匿名函数自执行
+捕获panic 触发的异常
+panic 本身是一个函数，参数为interface{}
+
+func  panic(v interface{}){
+
+}
+
+ */
+
+
+type panictext struct{
+
+	text string
+}
+
+
+type f_call func(string) int
+
+func panic_call(f f_call, str string ){
+
+	defer func(){
+
+		if err:=recover(); err !=nil{
+
+			fmt.Println("捕获到err",err)
+		}
+
+	}()
+
+
+	f(str)
+}
+
+
+
+
 func main(){
 
 	 fmt.Println(jiecheng(10))
@@ -197,4 +350,31 @@ func main(){
 	//fmt.Println(ti(3))
 
 
+
+	process_arg(13,"中国","abc",&invoker{name:"zhangsan",age:10})
+
+	fmt.Println("size is(字节) ",process_file("../src/study1/example-leixing/example-leixing.go"))
+
+
+	for  _, parse_str:= range []interface{}{"中国",invoker{name:"zhangsan",age:10}} {
+		if o, err := process_parserr(parse_str); err != nil {
+
+			fmt.Println(err)
+		} else {
+
+			fmt.Println(o)
+		}
+	}
+
+
+	panic_call(f_call(func(n string)int {
+		fmt.Println("too hard")
+
+		panic(panictext{"a new test"})
+		if v, err := strconv.Atoi(n); err == nil {
+			return v
+		} else {
+			return 0
+		}
+	}), "199")
 }
