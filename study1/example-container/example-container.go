@@ -4,7 +4,9 @@ import (
 
 	"fmt"
 	"sync"
-	"sort"
+	_ "sort"
+
+	"math/rand"
 
 )
 import "container/list"
@@ -162,27 +164,115 @@ func process_list() {
 // 切片的查找和排序
 func process_sorts(){
 
-	var a []int = []int{1,9,6,78,987,67}
-	sort.Ints(a)
-	fmt.Println(a)
+	//var a []int = []int{1,9,6,78,987,67}
+	//sort.Ints(a)
+	//fmt.Println(a)
 
-	index:=sort.SearchInts(sort.Ints(a),67)
-	fmt.Println(index)
+	//index:=sort.SearchInts(sort.Ints(a),67)
+	//fmt.Println(index)
 }
 
 // 二维map的查找和更新
+func map_erwei(){
+
+	var map_str map[string]map[string]string = make(map[string]map[string]string,10)
+
+	if v,ok:= map_str["zhangsan"] ; ok {
+		v["user"] = "zhs"
+		v["pwd"] = "asd"
+
+	}else{
+		map_str["zhangsan"] = make(map[string]string)
+		map_str["zhangsan"]["user"] = "zs"
+		map_str["zhangsan"]["pwd"] = "123"
+	}
+
+	fmt.Println(map_str)
+
+	// 优化版
+	if _,ok := map_str["zhangsan"] ; !ok{
+		map_str["zhangsan"] = make(map[string]string)
+	}
+
+	map_str["zhangsan"]["user"] = "zhs"
+	map_str["zhangsan"]["pwd"] = "asd"
+
+	fmt.Println(map_str)
 
 
-func main(){
+
+}
+
+func testmap(){
+	var lock sync.Mutex
+	var a map[int]int
+
+	a = make(map[int]int,10)
+	a[0] = 1
+	a[5] = 8
+
+	for i:=0; i<2; i++{
+
+		go func(b map[int]int){
+			lock.Lock()
+			b[0] = rand.Intn(100)
+			lock.Unlock()
+		}(a)
+
+
+	}
+	lock.Lock()
+	fmt.Println(a)
+	lock.Unlock()
+
+}
+
+
+func testRWlockmap(){
+
+	var lock sync.RWMutex
+	var a map[int]int
+
+	a = make(map[int]int,10)
+
+
+	for i:=0; i<10; i++{
+
+		go func(b map[int]int){
+			lock.Lock()             // 写锁不允许其他线程读和写
+			//b[i] = rand.Intn(100)
+			fmt.Println(i)
+			lock.Unlock()
+		}(a)
+
+
+	}
+
+
+	for i:=0; i<10;i++{
+		go func(b map[int]int){
+			lock.RLock()         // 读锁允许其他线程读 ，不允许其他线程写
+			fmt.Println(b)
+			lock.RUnlock()
+		}(a)
+
+	}
+
+
+
+
+
+}
+
+func main() {
 
 	var a [6]int
 
 	test2(a)
 	fmt.Println(a)
 
-	for i:=0;i<len(a);i++{
-		fmt.Println(i,a[0])
-
+	for i := 0; i < len(a); i++ {
+		fmt.Println(i, a[0])
 
 	}
 	test2_ptr(&a)
@@ -198,4 +288,8 @@ func main(){
 
 	process_list()
 	process_sorts()
+	map_erwei()
+	testmap()
+	testRWlockmap()
+
 }
