@@ -314,9 +314,9 @@ type outerS struct{
 
 
 type outerS1 struct{
-	i int
-	j int
-	int     // 匿名字段int
+	I int
+	J int
+	C int     // 匿名字段int
 	*innerS  // 匿名内嵌结构体 innerS
 
 }
@@ -348,9 +348,9 @@ func neiqian_struct(){
 	fmt.Println(t1)
 
 	var t2 *outerS1 = &outerS1{}
-	t2.i = 1
-	t2.j = 2
-	t2.int = 3
+	t2.I = 1
+	t2.J = 2
+	t2.C = 3
 	t2.innerS = &innerS{
 		A:5,
 		B:6,
@@ -367,16 +367,16 @@ func neiqian_struct(){
 func xuliehua(){
 
 
-	var t2 	 *outerS = &outerS{
+	var t2 	 *outerS1 = &outerS1{
 
 
-		innerS: innerS{
+		innerS: &innerS{
 			A: 5,
 			B:6,
 		},
-		i:1,
-		j:2,
-		int:3 ,
+		I:1,
+		J:2,
+		C:3 ,
 
 	}
 
