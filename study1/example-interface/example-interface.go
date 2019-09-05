@@ -128,15 +128,15 @@ func main(){
 	fmt.Println(rel3,ok3)             // <nil> false
 
 
-	
+
 	var result interface{}              //先定义类型，在进行断言测试
 	var is_boo bool
 	result,is_boo = c.(interface{})     //c 实现了interface() 和 Write 两个接口
 
 	fmt.Println(result,is_boo)           //  &{} true
 
-	rel:= b.(Write)                     // 断言失败出现恐慌
-	fmt.Println(rel)                    // panic: interface conversion: string is not main.Write: missing method write
+	//rel:= b.(Write)                     // 断言失败出现恐慌
+	//fmt.Println(rel)                    // panic: interface conversion: string is not main.Write: missing method write
 
 
 
@@ -149,4 +149,12 @@ func main(){
 
  */
 
+	var ii interface{} = 1
+
+	var bi int
+	//bi = ii              // 触发宕机了，空接口不能直接转换为int
+
+	bi = ii.(int)       // 通过断言进行类型转换
+
+	fmt.Println(bi)
 }
