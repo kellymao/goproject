@@ -242,10 +242,47 @@ func read_str1(){
 	 */
 
 }
+
+
+
+
+func read_file(){
+
+
+	inputfile,inputerr := os.Open("/tmp/src.txt")
+	if inputerr !=nil{
+
+		return
+	}
+
+
+	inputReader := bufio.NewReader(inputfile)
+
+	buf := make([]byte, 1024)
+
+	for {
+		n, err := inputReader.Read(buf)
+
+
+		/*
+		if (n == 0) { break}
+		 */
+
+		if err == io.EOF {
+			break
+		}
+
+		//os.Stdout.Write(buf[:n])
+		fmt.Printf("%s",buf[:n])
+
+	}
+}
 func main(){
 
 	//charcount_file()
 
-	read_str()
+	//read_str()
+
+	read_file()
 
 }
