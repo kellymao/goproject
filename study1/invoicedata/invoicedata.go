@@ -54,6 +54,23 @@ func main(){
 	}
 
 
+	outputfile :="/workspace/src/study1/datadir/out.dat"
+
+	file_w,err:=os.OpenFile(outputfile,os.O_WRONLY|os.O_CREATE,0644)
+
+	if err!=nil {
+		fmt.Println(err)
+		return
+	}
+
+	defer file_w.Close()
+
+	var writer invoicedata.Marshainvoice =  invoicedata.NewProcessText()
+
+	writer.Invoice_write(file_w,content)
+
+
+
 
 
 }
