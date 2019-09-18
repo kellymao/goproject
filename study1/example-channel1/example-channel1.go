@@ -379,6 +379,103 @@ func process_telnet(input string,exit chan int) bool {
 
 }
 
+// 单向通道的使用
+
+/*
+
+1. 定义了一个双向的通道 chinint
+
+2. 声明一个只能收数据的通道类型 chinrev , 并赋值为chinint
+
+3. 声明一个只能取数据的通道类型 chinsed , 并赋值为chinint
+
+3. 定义一个goroutine  sub_rev_channel 往里面chinrev 传值
+
+4. 从chinsed 和 chinint 两个通道都可以取值
+
+ */
+
+func main_single_channel(){
+
+
+	var chinint chan int = make(chan int)
+
+
+	var chinrev chan<- int  = chinint
+
+	go sub_rev_channel(chinrev)
+
+
+
+	var chinsed <-chan int  = chinint
+
+	fmt.Println("first from chinsed :", <-chinsed)
+
+	for data:= range chinint{
+
+
+		fmt.Println(data)
+	}
+
+
+
+
+
+
+
+
+}
+
+func sub_rev_channel(chanint chan<- int){
+
+	fmt.Println(chanint)
+	chanint<-3
+
+	for i:=0;i<30;i++{
+
+		chanint<-i
+
+	}
+
+
+}
+
+
+/*
+
+自定义一个type，类型为通道。 client 里面存的是通道
+
+
+ */
+
+
+func main_type_channel(){
+
+	type client chan<- string
+
+	var client_send chan client = make(chan client)
+
+
+	ch:=make(chan string)
+	//ch<-"job"
+
+
+	go func(){
+
+		fmt.Println(client_send)
+		fmt.Println(<-client_send)
+
+	}()
+
+	client_send <- ch
+
+
+
+
+
+
+}
+
 func main (){
 
 	//main_play()
@@ -393,7 +490,14 @@ func main (){
 
 	//main_afterfunc()
 
-	main_telnet()
+	//main_telnet()
+
+	//main_single_channel()
+
+	main_type_channel()
+
+
+
 
 
 
