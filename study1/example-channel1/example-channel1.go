@@ -339,6 +339,7 @@ func sub_telnet(conn net.Conn, exit chan int){
 			if err == io.EOF {
 
 				fmt.Println("read finished")
+				return
 			} else {
 				fmt.Println(err)
 				return
@@ -490,11 +491,11 @@ func main (){
 
 	//main_afterfunc()
 
-	//main_telnet()
+	main_telnet()
 
 	//main_single_channel()
 
-	main_type_channel()
+	//main_type_channel()
 
 
 
