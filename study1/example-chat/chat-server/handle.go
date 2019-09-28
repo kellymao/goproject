@@ -139,7 +139,7 @@ func (p *Handle) login(msg common.Message) error {
 
 	}
 
-	/*
+
 	var notice common.Message  = common.Message{
 
 		Msgtype:"notice",
@@ -148,9 +148,9 @@ func (p *Handle) login(msg common.Message) error {
 		Msgrecv:"all",
 	}
 
-	// 发送所有通知
+
 	clientmgr.sendall(notice)
-	*/
+
 
 	// 在线列表加入本节点
 	user.Status = "online"
@@ -195,6 +195,7 @@ for {
 		return
 	}
 
+	/*
 	msg_r1 := common.Message{
 
 		Msgtype:"allmessage",
@@ -204,13 +205,13 @@ for {
 	}
 	//data,_:=json.Marshal(msg_r)
 	p.send_msg(msg_r1)
-
+	*/
 	switch msg.Msgtype {
 
 
 	case common.Msgtype_login:
 
-		continue
+		//continue
 		err =p.login(msg)
 
 	case common.Msgtype_getonlinelist:
@@ -255,7 +256,9 @@ for {
 			Msgrecv: 	"all",
 		}
 
+		clientmgr.sendall(msg_r)
 
+		/*
 		 msg_r = common.Message{
 
 			Msgtype:"allmessage",
@@ -263,9 +266,12 @@ for {
 			Msgsend: p.userobj.Id,
 			Msgrecv: 	"all",
 		}
-		//data,_:=json.Marshal(msg_r)
-		p.send_msg(msg_r)
 
+		 */
+		//data,_:=json.Marshal(msg_r)
+		//p.send_msg(msg_r)
+
+		/*
 		for i := range clientmgr.clients{
 
 			fmt.Println("这里面有没有东西")
@@ -279,6 +285,8 @@ for {
 			clientmgr.clients[i].send_msg(msg_r)
 
 		}
+
+		 */
 
 		//clientmgr.sendall(msg_r)
 

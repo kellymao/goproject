@@ -24,13 +24,13 @@ func (p *Clientmgr) sendall(msg common.Message){
 	for i ,h  := range p.clients{
 
 		fmt.Println(i,"****",msg)
-		fmt.Printf("[%s] %p \n" , i, p.clients[i])
-		fmt.Printf("%p %v %v \n",p.clients[i].conn,p.clients[i].conn,p.clients[i].userobj)
+		//fmt.Printf("[%s] %p \n" , i, p.clients[i])
+		//fmt.Printf("%p %v %v \n",p.clients[i].conn,p.clients[i].conn,p.clients[i].userobj)
 
 
 
 		//p.clients[i].conn.Write([]byte("testtt\n") )
-		p.clients[i].send_msg(msg)
+		//p.clients[i].send_msg(msg)
 
 		h.send_msg(msg)
 
