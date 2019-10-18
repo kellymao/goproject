@@ -1,0 +1,70 @@
+2019-08-08T09:50:02.842739Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2019-08-08T09:50:03.114837Z 0 [Warning] InnoDB: New log files created, LSN=45790
+2019-08-08T09:50:03.162431Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.
+2019-08-08T09:50:03.222490Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: e4ef49a1-b9c1-11e9-a39e-fa163e2a719e.
+2019-08-08T09:50:03.223660Z 0 [Warning] Gtid table is not ready to be used. Table 'mysql.gtid_executed' cannot be opened.
+2019-08-08T09:50:03.224289Z 1 [Note] A temporary password is generated for root@localhost: B9*pWdmS*f-T
+2019-08-08T09:50:06.189505Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2019-08-08T09:50:06.194339Z 0 [Note] /usr/sbin/mysqld (mysqld 5.7.27) starting as process 7145 ...
+2019-08-08T09:50:06.202604Z 0 [Note] InnoDB: PUNCH HOLE support available
+2019-08-08T09:50:06.202644Z 0 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2019-08-08T09:50:06.202649Z 0 [Note] InnoDB: Uses event mutexes
+2019-08-08T09:50:06.202652Z 0 [Note] InnoDB: GCC builtin __atomic_thread_fence() is used for memory barrier
+2019-08-08T09:50:06.202661Z 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2019-08-08T09:50:06.202696Z 0 [Note] InnoDB: Using Linux native AIO
+2019-08-08T09:50:06.203354Z 0 [Note] InnoDB: Number of pools: 1
+2019-08-08T09:50:06.203567Z 0 [Note] InnoDB: Using CPU crc32 instructions
+2019-08-08T09:50:06.209841Z 0 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M
+2019-08-08T09:50:06.229208Z 0 [Note] InnoDB: Completed initialization of buffer pool
+2019-08-08T09:50:06.234084Z 0 [Note] InnoDB: If the mysqld execution user is authorized, page cleaner thread priority can be changed. See the man page of setpriority().
+2019-08-08T09:50:06.248791Z 0 [Note] InnoDB: Highest supported file format is Barracuda.
+2019-08-08T09:50:06.262701Z 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2019-08-08T09:50:06.262776Z 0 [Note] InnoDB: Setting file './ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2019-08-08T09:50:06.282662Z 0 [Note] InnoDB: File './ibtmp1' size is now 12 MB.
+2019-08-08T09:50:06.285990Z 0 [Note] InnoDB: 96 redo rollback segment(s) found. 96 redo rollback segment(s) are active.
+2019-08-08T09:50:06.286021Z 0 [Note] InnoDB: 32 non-redo rollback segment(s) are active.
+2019-08-08T09:50:06.289866Z 0 [Note] InnoDB: Waiting for purge to start
+2019-08-08T09:50:06.340036Z 0 [Note] InnoDB: 5.7.27 started; log sequence number 2625600
+2019-08-08T09:50:06.340576Z 0 [Note] InnoDB: Loading buffer pool(s) from /var/lib/mysql/ib_buffer_pool
+2019-08-08T09:50:06.343123Z 0 [Note] Plugin 'FEDERATED' is disabled.
+2019-08-08T09:50:06.344309Z 0 [Note] InnoDB: Buffer pool(s) load completed at 190808 17:50:06
+2019-08-08T09:50:06.355237Z 0 [Note] Found ca.pem, server-cert.pem and server-key.pem in data directory. Trying to enable SSL support using them.
+2019-08-08T09:50:06.355607Z 0 [Warning] CA certificate ca.pem is self signed.
+2019-08-08T09:50:06.358849Z 0 [Note] Server hostname (bind-address): '*'; port: 3306
+2019-08-08T09:50:06.358894Z 0 [Note] IPv6 is available.
+2019-08-08T09:50:06.358911Z 0 [Note]   - '::' resolves to '::';
+2019-08-08T09:50:06.358955Z 0 [Note] Server socket created on IP: '::'.
+2019-08-08T09:50:06.374163Z 0 [Note] Event Scheduler: Loaded 0 events
+2019-08-08T09:50:06.374351Z 0 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.7.27'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Server (GPL)
+2019-08-08T09:54:26.897013Z 2 [Note] Access denied for user 'root'@'localhost' (using password: NO)
+2019-08-08T10:02:01.089795Z 5 [Note] Access denied for user 'root'@'localhost' (using password: YES)
+2019-08-08T10:05:54.022631Z 8 [Warning] IP address '192.168.2.148' could not be resolved: Name or service not known
+2019-08-08T10:05:54.027546Z 8 [Note] Aborted connection 8 to db: 'unconnected' user: 'root' host: '192.168.2.148' (Got an error reading communication packets)
+2019-08-09T00:55:34.780400Z 10 [Note] Unknown database 'lover2'
+2019-10-09T10:29:02.414186Z 11 [Note] Access denied for user 'root'@'localhost' (using password: NO)
+2019-10-09T10:29:36.306848Z 12 [Note] Access denied for user 'root'@'localhost' (using password: NO)
+2019-10-09T18:32:02.160737Z 13 [Note] Aborted connection 13 to db: 'mydb1' user: 'root' host: 'localhost' (Got timeout reading communication packets)
+2019-10-10T03:01:20.914518Z 14 [Note] Access denied for user 'root'@'localhost' (using password: NO)
+2019-10-10T03:01:41.472122Z 15 [Note] Aborted connection 15 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:01:59.470755Z 16 [Note] Aborted connection 16 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:02:26.972927Z 17 [Note] Aborted connection 17 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:03:31.055471Z 19 [Note] Aborted connection 19 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:06:29.386678Z 20 [Note] Aborted connection 20 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:06:37.571147Z 21 [Note] Aborted connection 21 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:11:06.466416Z 22 [Note] Aborted connection 22 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:12:09.990873Z 23 [Note] Aborted connection 23 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:12:42.775745Z 24 [Note] Aborted connection 24 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:16:23.372010Z 25 [Note] Aborted connection 25 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:18:30.524023Z 26 [Note] Aborted connection 26 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:34:51.556823Z 27 [Note] Aborted connection 27 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:35:48.606310Z 28 [Note] Aborted connection 28 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:47:19.955498Z 29 [Note] Aborted connection 29 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:48:09.730874Z 30 [Note] Aborted connection 30 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T03:48:49.468137Z 31 [Note] Aborted connection 31 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T05:36:40.956539Z 32 [Note] Aborted connection 32 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T05:37:39.553075Z 33 [Note] Aborted connection 33 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T06:06:31.978866Z 34 [Note] Aborted connection 34 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T06:06:51.191110Z 35 [Note] Aborted connection 35 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T06:30:33.820923Z 36 [Note] Aborted connection 36 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2019-10-10T06:31:34.883278Z 37 [Note] Aborted connection 37 to db: 'mydb1' user: 'root' host: 'localhost' (Got an error reading communication packets)
