@@ -1,6 +1,12 @@
 package main
 
-import "net"
+import (
+	"encoding/binary"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"net"
+)
 import "bytes"
 
 type Client struct{
@@ -15,14 +21,14 @@ type Client struct{
 
 
 
-func (p *Client) readPackage() (Message, error){
+func (p *Client) readPackage() (msg Message, err error){
 
 
 	n,err:=p.conn.Read(p.buf[0:4])
 	if n!=4 {
 
 		err = errors.New("read header failed")
-		return nil, err
+		return
 
 	}
 
@@ -34,7 +40,7 @@ func (p *Client) readPackage() (Message, error){
 	if err!=nil{
 
 		fmt.Println()
-		return nil,err
+		return
 
 
 	}
@@ -44,17 +50,17 @@ func (p *Client) readPackage() (Message, error){
 	if n!=int(packlen){
 
 		err = errors.New("read body failed")
-		return nil,err
+		return
 
 	}
 
-	var msg Message
+
 	err = json.Unmarshal(p.buf[0:packlen],&msg)
 
 	if err!=nil{
 
 		fmt.Println("unmarshal failed",err)
-		return nil,err
+		return
 	}
 	return msg,nil
 
@@ -91,9 +97,9 @@ func (p *Client) Processmsg(msg Message) (err error){
 		err = p.login(msg)
 
 	case Userregister:
-		err= p.register(msg)
+		//err= p.register(msg)
 	default:
-		err = errors.new("fail message")
+		err = errors.New("fail message")
 		return
 
 	}
@@ -106,9 +112,9 @@ func (p *Client) Processmsg(msg Message) (err error){
 
 func (p *Client) login(msg Message) (err error){
 
-	var cmd Logincmd
+	//var cmd Logincmd
 
-	err = json.Unmarshal([])
+	//err = json.Unmarshal([])
 
 
 }

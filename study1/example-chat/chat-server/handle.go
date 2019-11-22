@@ -70,9 +70,7 @@ func (p *Handle) rev_msg() (msg common.Message, err error ) {
 
 	}
 
-
-
-	json.Unmarshal(bufdata,&msg)
+	_ = json.Unmarshal(bufdata, &msg)
 
 	return
 

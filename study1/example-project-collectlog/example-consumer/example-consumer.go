@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/Shopify/sarama"
 	"strings"
 	"sync"
-	"github.com/Shopify/sarama"
 )
 
 var (

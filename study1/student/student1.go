@@ -1,8 +1,9 @@
-package student
+package main
 
 import (
 	"fmt"
 	"strconv"
+	"encoding/json"
 )
 
 
@@ -45,9 +46,14 @@ func init(){
 func main(){
 
 	var a map[string]string 
+	fmt.Println(a==nil) //true
+	var b map[string]string = map[string]string{"name":"alex"}
+	data,_:=json.Marshal(b)
+	json.Unmarshal(data,&a)
 	fmt.Println(a)
-
+	fmt.Println(a==nil) //false  
 	a = make(map[string]string)
 	fmt.Println(a)
+	fmt.Println(a==nil) //false
 
 }
