@@ -4,9 +4,8 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net"
-	"strings"
+	"study1/exmaple-more/chatroom/common"
 )
 
 
@@ -34,6 +33,7 @@ func handle(conn net.Conn){
 
 	}()
 
+	/*
 	for {
 
 		line,err:=reader.ReadString('\n')
@@ -70,7 +70,31 @@ func handle(conn net.Conn){
 
 
 	}
+	*/
 
+
+	for {
+
+		data,err:=common.Decode(reader)
+		if err!=nil{
+			fmt.Println(err)
+			return
+		}
+
+		err = json.Unmarshal([]byte(data), &msginfo)
+		if err!=nil{
+			fmt.Println("数据unmarshal 失败了",err)
+		}
+
+		msghander.Connection = conn
+		msghander.Msginfo = msginfo
+
+		msghander.HandleMsg()
+		fmt.Println("-------------------")
+		fmt.Printf("%+v \n",msghander)
+
+
+	}
 
 
 }

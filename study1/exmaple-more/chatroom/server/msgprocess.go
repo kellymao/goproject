@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"strings"
+	"study1/exmaple-more/chatroom/common"
 )
 
 type Msginfo struct{
@@ -32,13 +33,11 @@ func (m *MsgProcess) Login(){
 		var msgtxt string
 		var status bool
 		var user map[string]string = map[string]string{"userid":"","password":""}
-		var userid string
 		_ = json.Unmarshal([]byte(m.Msginfo.Msgtxt), &user)
 
 		ok := usermanger.Login(user,m.Connection)
 		if ok {
 			m.Ownid = user["userid"]
-			userid = user["userid"]
 
 			msgtxt = "登录成功：" + user["userid"]
 
@@ -52,15 +51,12 @@ func (m *MsgProcess) Login(){
 			status = true
 
 		}else{
-			usermanger.ErrorUser["erroruser"] = m.Connection
-			userid = "erroruser"
 			msgtxt = "登录失败，用户名或密码不对：" + user["userid"]
 			status = false
 
 		}
 
-	fmt.Println("----login center")
-	fmt.Printf("%+v \n",m)
+
 
 	   msg := Msginfo{
 		Msgtype:"loginresp",
@@ -70,7 +66,13 @@ func (m *MsgProcess) Login(){
 	   }
 
 		data, _ := json.Marshal(msg)
-	_ = usermanger.Sendmsg(userid, data)
+	    returnmsg, err := common.Encode(string(data))
+	    if err!=nil{
+	    	fmt.Println("encode data err",err)
+		}
+
+		fmt.Println("登录的信息",string(returnmsg))
+		_, _ = m.Connection.Write(returnmsg)
 
 
 
@@ -80,7 +82,9 @@ func (m *MsgProcess) Logout(){
 	usermanger.Logout(m.Ownid)
 }
 
+/*
 func (m *MsgProcess) Sendmsg(data []byte){
+
 	_, err := m.Connection.Write(data)
 	if err!=nil{
 		fmt.Println("消息发送失败",data)
@@ -89,6 +93,7 @@ func (m *MsgProcess) Sendmsg(data []byte){
 
 
 }
+*/
 
 func (m *MsgProcess) Handle(){
 
@@ -109,15 +114,15 @@ func (m *MsgProcess) Handle(){
 
 	if sendto_id == "all"{
 
-		fmt.Println("到这了")
 		callmsg.Sendto = "all"
 		fmt.Println("要发送给客户端的数据:",callmsg)
 		data ,_ := json.Marshal(callmsg)
 
 		for uid := range usermanger.OnlineUsers{
 
+				go  usermanger.Sendmsg(uid, data)
 
-			go  usermanger.Sendmsg(uid, data)
+
 
 		}
 
@@ -151,7 +156,6 @@ func (m *MsgProcess) Handle(){
 
 func (m *MsgProcess) HandleMsg(){
 
-	fmt.Println(m.Msginfo.Msgtype)
 
 	switch m.Msginfo.Msgtype{
 	case "login":
@@ -164,7 +168,6 @@ func (m *MsgProcess) HandleMsg(){
 
 
 	case "message":
-		fmt.Println("testxxx")
 		m.Handle()
 
 

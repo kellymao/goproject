@@ -2,323 +2,157 @@ package main
 
 import (
 	"bufio"
-	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net"
 	"os"
 	"strings"
 	"study1/exmaple-more/chatroom/common"
 )
 
-var msgstdinchan chan string = make(chan string)
-var msgsendchan chan string = make(chan string)
-var msgrecvchan = make(chan string)
-
-var login_resp = make(chan bool)
-
-var my_userid string
 
 
-func handle(conn net.Conn){
+type ChatClient struct{
 
-
-
+	Chatsocket net.Conn
+	Msg_stdin chan string
+	Msg_send  chan string
+	Msg_recv  chan string
+	Login_status chan bool
 
 }
 
-
-func client() (net.Conn, bool) {
-
+func (chat *ChatClient) connect_server(addr string) bool {
 
 
-	conn,err:=net.Dial("tcp","127.0.0.1:10086")
-
+	client,err:=net.Dial("tcp",addr)
 	if err!=nil{
+		log.Error("connect_server 连接服务器失败！",err)
+		return false
 
-		fmt.Println("连接服务器失败")
-		return nil,false
 	}
 
-	return conn,true
-
-
-
+	chat.Chatsocket = client
+	log.Debug(chat.Chatsocket)
+	return true
 
 }
 
+func (chat *ChatClient) handle_stdin(){
 
-func handle_stdin(){
-
-
-	reader :=bufio.NewReader(os.Stdin)
-
+	reader := bufio.NewReader(os.Stdin)
 	for {
 
-		line ,err := reader.ReadString('\n')
-
-		if err !=nil{
-			fmt.Println("从终端读取数据失败")
-			os.Exit(1)
-		}
-
-		fmt.Println(line)
-		msgstdinchan <- strings.TrimSuffix(line,"\n")
-
-	}
-}
-
-func recvmsg(conn net.Conn){
-
-	var msg bytes.Buffer
-	var buf  [7]byte
-
-	for {
-		n ,err := conn.Read(buf[0:])
+		line ,err:= reader.ReadString('\n')
 		if err!=nil{
+			log.Error("handle_stdin err:",err)
+		}
 
+		/*
+		从终端接收输入， 去掉尾部的空格
+		 */
+		log.Debug(line)
+		chat.Msg_stdin <- strings.TrimSuffix(line,"\n")
+	}
+}
 
-			if err == io.EOF{
-				fmt.Println("服务器已断开连接")
+func (chat *ChatClient) handle_message(userid string,ctx context.Context){
+
+	for{
+
+		select{
+			case message := <-chat.Msg_send:
+				chat.send_message(message)
+
+			case message := <-chat.Msg_recv:
+				chat.handle_stdout(message,userid)
+			case <-ctx.Done():
 				return
-			}
-			fmt.Println("从服务器接收数据失败",err)
-			continue
-
 		}
-		fmt.Println("收到了数据长度为",n)
-
-		msg.Write(buf[0:n])
-
-		if buf[n-1] == '\n'{
-			msgrecvchan <- msg.String()
-			msg = bytes.Buffer{}
-		}
-
-
 	}
-
 
 }
 
-func handle_message(data string){
-
-	var msg common.Msginfo
-	err := json.Unmarshal([]byte(data),&msg)
-	if err!=nil{
-		fmt.Println("handle_message unmarshal err",err)
+func (chat *ChatClient) send_message(message string){
+	log.Debug("Msg_send收到了数据，准备发送数据", message)
+	data, err := common.Encode(message)
+	if err != nil {
+		log.Error("encode data err:", err)
 	}
 
-	switch msg.Msgtype {
+	_, err = chat.Chatsocket.Write(data)
 
-	case "loginresp":
-		fmt.Println(msg.Msgtxt)
-			if msg.Stauts {
-				login_resp <- true
-
-			}else{
-				login_resp <- false
-			}
-
-
-
-
-	case "message":
-
-		if msg.Sendto == "all"{
-
-			if msg.From == my_userid{
-				fmt.Printf("我对大家说：%s \n",msg.Msgtxt)
-				return
-			}
-			fmt.Printf("%s 对大家说：%s \n",msg.From,msg.Msgtxt)
-
-		}else{
-			fmt.Printf("%s 对我说：%s \n",msg.From,msg.Msgtxt)
-
-		}
-
+	if err != nil {
+		log.Error("handle_send err:", err)
 	}
-
-
 }
 
-func handleconn(conn net.Conn)  {
+func (chat *ChatClient) handle_stdout(message string,userid string){
 
-	for {
-		select {
-
-		case data := <-msgsendchan:
-
-			fmt.Println("before send", data)
-			_, err := conn.Write([]byte(data + "\n"))
-			if err != nil {
-				fmt.Println("数据发送失败", err)
-
-			}
-
-		case data1 := <-msgrecvchan:
-
-			//fmt.Println(data1)
-
-			handle_message(data1)
-
-
-		}
-
-	}
-
-
-
-
-
-}
-
-func login() bool {
-
-	fmt.Println("请输入登录信息")
-	fmt.Println("请输入用户id：")
-	userid := <-msgstdinchan
-	fmt.Println("请输入密码：")
-	pwd:= <-msgstdinchan
-
-	if len(userid ) == 0 || len(pwd) ==0 {
-
-		fmt.Println("用户名密码不可以为空")
-		login()
-	}
 
 	/*
 		Msgtype string  `json:"msgtype"`
 		Msgtxt string `json:"msgtxt"`
 		Sendto string `json:"sendto"`
 		From string   `json:"from"`
-	 */
-	Msgtxt := map[string]string{"userid":userid ,"password":pwd}
+		Stauts bool `json:"status"`
 
-	fmt.Println(Msgtxt)
+	*/
 
-	txt,err:=json.Marshal(Msgtxt)
+	var msg common.Msginfo
 
-	if err!=nil{
-		fmt.Println("marshal err",err)
-	}
-	msg:= common.Msginfo{
-		Msgtype:"login",
-		Msgtxt:string(txt),
-		Sendto:"server",
-	}
-	fmt.Println(msg)
-
-	data,err := json.Marshal(msg)
-	if err!=nil{
-		fmt.Println("marshal err",err)
-	}
-	fmt.Println(string(data))
-	msgsendchan <- string(data)
-
-	status:= <- login_resp
-
-	if status{
-
-		fmt.Printf("登录成功了，[%s]\n" ,userid)
-		my_userid =userid
-
-	}else{
-		fmt.Printf("登录失败了，[%s]\n" ,userid)
-
-
+	err := json.Unmarshal([]byte(message), &msg)
+	if err != nil {
+		log.Error("handle_msg error:", err)
 	}
 
-	return status
+	switch msg.Msgtype {
 
+	case "loginresp":
 
+		log.Debug(msg.Msgtxt)
+		if msg.Stauts {
 
+			chat.Login_status <- true
+		}
+	case "message":
+		log.Debug("sendto ", msg.Sendto)
+		log.Debug("from ", msg.From)
+		log.Debug("text ", msg.Msgtxt)
 
+		if msg.Sendto == "all" {
+			if msg.From == userid {
+				fmt.Println("我对大家说：", msg.Msgtxt)
+
+			} else {
+				fmt.Println(msg.From, "对大家说：", msg.Msgtxt)
+
+			}
+		} else {
+			fmt.Println(msg.From, "对我说：", msg.Msgtxt)
+		}
+
+	}
 }
 
-func logicview(){
-
-	fmt.Println("欢迎来到聊天室：")
-
-	fmt.Println("公共聊天@all + 聊天内容， 单聊@userid + 聊天内容，退出 logout")
-
-	for{
-
-		message  := <-msgstdinchan
-
-		if len(message ) == 0 {
-			fmt.Println("输入内容不可以为空")
-			continue
-		}
-
-		if strings.HasPrefix(message,"@all"){
-
-			msg:= common.Msginfo{
-				Msgtype:"message",
-				Msgtxt:message,
-				Sendto:"all",
-			}
 
 
-			data,err := json.Marshal(msg)
-			if err!=nil{
-				fmt.Println("marshal err",err)
-			}
-
-			msgsendchan <- string(data)
 
 
-		}else if strings.HasPrefix(message,"@"){
+func (chat *ChatClient) handle_recv(ctx context.Context,cancal context.CancelFunc){
 
-			msglist :=strings.Split(message," ")
-			txt:=strings.Join(msglist[1:],"")
-
-			msg:= common.Msginfo{
-				Msgtype:"message",
-				Msgtxt:txt,
-				Sendto:strings.TrimPrefix(msglist[0],"@"),
-			}
-
-
-			data,err := json.Marshal(msg)
-			if err!=nil{
-				fmt.Println("marshal err",err)
-			}
-
-			msgsendchan <- string(data)
-
-		}else if strings.HasPrefix(message,"logout"){
-
-
-			msg:= common.Msginfo{
-				Msgtype:"logout",
-				Msgtxt:"",
-				Sendto:"",
-			}
-
-
-			data,err := json.Marshal(msg)
-			if err!=nil{
-				fmt.Println("marshal err",err)
-			}
-
-			msgsendchan <- string(data)
-
-			fmt.Println("退出客户端")
-			wg.Done()
+	log.Debug("socket client ",chat.Chatsocket)
+	reader := bufio.NewReader(chat.Chatsocket)
+	for {
+		data, err := common.Decode(reader)
+		if err != nil {
+			log.Error("decode data err:", err)
+			cancal()
 			return
-
-		} else{
-			fmt.Println("输入的格式不对")
-			fmt.Println("公共聊天@all + 聊天内容， 单聊@userid + 聊天内容：")
-			continue
-
 		}
-
+		log.Debug("处理过的数据",data)
+		chat.Msg_recv <- data
 	}
-
-
 
 }
