@@ -1,0 +1,9 @@
+{
+  "admin": {
+    "username": "root",
+    "password": "12345678",
+    "path": "127.0.0.1:3306",
+    "dbname": "yyserver",
+    "config": "charset=utf8&parseTime=True&loc=Local"
+  }
+}

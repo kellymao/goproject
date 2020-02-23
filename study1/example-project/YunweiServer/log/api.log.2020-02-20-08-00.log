@@ -1,0 +1,69 @@
+{"level":"info","msg":"服务器开启","time":"2020-02-20T17:28:42+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:29:49.860005644 +0800 CST m=+67.822361565 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:29:49+08:00"}
+{"level":"info","msg":"| 200 |    1.122985ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:29:49+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:30:07.820291127 +0800 CST m=+85.782647062 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:30:07+08:00"}
+{"level":"info","msg":"| 200 |    1.996108ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:30:07+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:30:35.69536902 +0800 CST m=+113.657724966 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:30:35+08:00"}
+{"level":"info","msg":"| 200 |     952.232µs |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:30:35+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:30:45.185772297 +0800 CST m=+123.148128197 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:30:45+08:00"}
+{"level":"info","msg":"| 200 |    1.489852ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:30:45+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:33:23.476973443 +0800 CST m=+281.439329387 |    172.18.8.178 | POST  /base/login |map[data:map[] success:%!s(bool=false) msg:用户名密码错误或record not found]|","time":"2020-02-20T17:33:23+08:00"}
+{"level":"info","msg":"| 200 |     928.003µs |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:33:23+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:34:14.083076928 +0800 CST m=+332.045432875 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:34:14+08:00"}
+{"level":"info","msg":"| 200 |     943.594µs |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:34:14+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:08.773808973 +0800 CST m=+566.736164885 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:08+08:00"}
+{"level":"info","msg":"| 200 |    1.180676ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:08+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:11.081766699 +0800 CST m=+569.044122625 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:11+08:00"}
+{"level":"info","msg":"| 200 |    1.165454ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:11+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:11.763808761 +0800 CST m=+569.726164711 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:11+08:00"}
+{"level":"info","msg":"| 200 |    1.114037ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:11+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:11.965040548 +0800 CST m=+569.927396491 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:11+08:00"}
+{"level":"info","msg":"| 200 |    1.145785ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:11+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:12.138276469 +0800 CST m=+570.100632356 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 |     1.35026ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:12.341702317 +0800 CST m=+570.304058255 |    172.18.8.178 | POST  /base/login |map[msg:用户名密码错误或record not found data:map[] success:%!s(bool=false)]|","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 |    1.227238ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:12.527760653 +0800 CST m=+570.490116583 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 |     893.182µs |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:12.665263389 +0800 CST m=+570.627619324 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 |    1.142088ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:12.811939491 +0800 CST m=+570.774295433 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 |    1.470086ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:12.985543392 +0800 CST m=+570.947902258 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 |    1.325949ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:12+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:13.181724505 +0800 CST m=+571.144080445 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:13+08:00"}
+{"level":"info","msg":"| 200 |    1.109059ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:13+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:13.347331474 +0800 CST m=+571.309687363 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:13+08:00"}
+{"level":"info","msg":"| 200 |    1.293045ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:13+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:38:13.555146909 +0800 CST m=+571.517502823 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:38:13+08:00"}
+{"level":"info","msg":"| 200 |    1.453598ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:38:13+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:39:51.564706837 +0800 CST m=+669.527062763 |    172.18.8.178 | POST  /base/login |map[data:map[] success:%!s(bool=false) msg:用户名密码错误或record not found]|","time":"2020-02-20T17:39:51+08:00"}
+{"level":"info","msg":"| 200 |    1.157361ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:39:51+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:40:46.089458899 +0800 CST m=+724.051814848 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:40:46+08:00"}
+{"level":"info","msg":"| 200 |    1.235721ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:40:46+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:42:02.723204521 +0800 CST m=+800.685560417 |    172.18.8.178 | POST  /base/login |map[msg:用户名密码错误或record not found data:map[] success:%!s(bool=false)]|","time":"2020-02-20T17:42:02+08:00"}
+{"level":"info","msg":"| 200 |    1.138913ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:42:02+08:00"}
+{"level":"info","msg":"服务器开启","time":"2020-02-20T17:43:15+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:43:34.282974766 +0800 CST m=+18.569839939 |    172.18.8.178 | POST  /base/login |map[data:map[] success:%!s(bool=false) msg:用户名密码错误或record not found]|","time":"2020-02-20T17:43:34+08:00"}
+{"level":"info","msg":"| 200 |    1.644953ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:43:34+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:44:42.893328832 +0800 CST m=+87.180194037 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:44:42+08:00"}
+{"level":"info","msg":"| 200 |    1.154782ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:44:42+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:53:00.044682832 +0800 CST m=+584.331548029 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:53:00+08:00"}
+{"level":"info","msg":"| 200 |     1.53683ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:53:00+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 17:56:36.800847632 +0800 CST m=+801.087712855 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T17:56:36+08:00"}
+{"level":"info","msg":"| 200 |    1.344783ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T17:56:36+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 18:00:00.430080829 +0800 CST m=+1004.716946058 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T18:00:00+08:00"}
+{"level":"info","msg":"| 200 |    1.296497ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T18:00:00+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 18:00:03.44914337 +0800 CST m=+1007.736008583 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T18:00:03+08:00"}
+{"level":"info","msg":"| 200 |     888.124µs |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T18:00:03+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 18:00:05.81299089 +0800 CST m=+1010.099856099 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T18:00:05+08:00"}
+{"level":"info","msg":"| 200 |    1.129969ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T18:00:05+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 18:00:08.364118391 +0800 CST m=+1012.650983601 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T18:00:08+08:00"}
+{"level":"info","msg":"| 200 |    1.187114ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T18:00:08+08:00"}
+{"level":"info","msg":"服务器开启","time":"2020-02-20T18:04:05+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 18:04:17.297460994 +0800 CST m=+12.141469224 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=false) msg:用户名密码错误或record not found data:map[]]|","time":"2020-02-20T18:04:17+08:00"}
+{"level":"info","msg":"| 200 |    1.921179ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T18:04:17+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 18:04:28.521583005 +0800 CST m=+23.365591225 |    172.18.8.178 | POST  /base/login |map[success:%!s(bool=true) msg:登录成功 data:map[user:{{%!s(uint=1) 2019-09-13 17:23:46 +0800 CST 2019-10-21 11:16:03 +0800 CST \u003cnil\u003e} ce0d6685-c15f-4126-a5b4-890bc9d2356d admin e10adc3949ba59abbe56e057f20f883e 超级管理员 http://www.henrongyi.top/avatar/lufu.jpg {{%!s(uint=0) 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC \u003cnil\u003e}  } 888} token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVVUlEIjoiY2UwZDY2ODUtYzE1Zi00MTI2LWE1YjQtODkwYmM5ZDIzNTZkIiwiSUQiOjEsIk5pY2tOYW1lIjoi6LaF57qn566h55CG5ZGYIiwiQXV0aG9yaXR5SWQiOiI4ODgiLCJleHAiOjE1ODI3OTc4NjgsImlzcyI6InFtUGx1cyIsIm5iZiI6MTU4MjE5MjA2OH0.T1lXe9BUFiDp68UkEDAx7J-PLw979-ooF6CaqySybxg expiresAt:%!s(int64=1582797868000)]]|","time":"2020-02-20T18:04:28+08:00"}
+{"level":"info","msg":"| 200 |    1.829072ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T18:04:28+08:00"}
+{"level":"info","msg":"| 200 | 2020-02-20 18:05:14.994276449 +0800 CST m=+69.838284701 |    172.18.8.178 | POST  /base/login |map[msg:用户名密码错误或record not found data:map[] success:%!s(bool=false)]|","time":"2020-02-20T18:05:14+08:00"}
+{"level":"info","msg":"| 200 |    1.563652ms |    172.18.8.178 | POST  /base/login ||","time":"2020-02-20T18:05:14+08:00"}

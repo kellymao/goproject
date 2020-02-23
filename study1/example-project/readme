@@ -1,0 +1,41 @@
+### 前端的部署
+
+自己创建项目目录
+cd /workspace/src/study1/example-project
+vue init webpack  YunweiVuePage
+
+
+
+? Project name yunweivuepage
+? Project description A Vue.js project
+? Author maomao
+? Vue build standalone
+? Install vue-router? Yes
+? Use ESLint to lint your code? Yes
+? Pick an ESLint preset Standard
+? Set up unit tests No
+? Setup e2e tests with Nightwatch? No
+? Should we run `npm install` for you after the project has been created? (recommended) npm
+
+   vue-cli · Generated "YunweiVuePage".
+# Project initialization finished!
+# ========================
+
+To get started:
+
+  cd YunweiVuePage
+  npm run dev
+
+
+1. 本项目前端采用 iview-admin
+
+https://github.com/hanjiangxueying/vue2-iview2-admin.git
+
+参考：
+https://github.com/iview/iview-admin
+https://www.oschina.net/news/89684/iview-2-5-0
+
+2. 安装包
+
+npm install vuex
+
