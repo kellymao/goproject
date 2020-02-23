@@ -24,7 +24,7 @@ router.beforeEach((to, from, next) => {
             store.dispatch('SetAsyncRouter')
             const asyncRouters = store.getters['asyncRouters']
             router.options.routes = router.options.routes.concat(asyncRouters);
-            router.addRoutes(asyncRouters)
+            router.addRoutes(asyncRouters); // 不能实时更新
 
             console.log(asyncRouterFlag);
 

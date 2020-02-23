@@ -26,3 +26,15 @@ export const login = params => {
         data: params
     })
     };
+
+
+export const getmenu = params =>{
+
+  return service({
+    url: `/menu/getmenu`,
+    method: 'post',
+    data: params
+  })
+
+
+};

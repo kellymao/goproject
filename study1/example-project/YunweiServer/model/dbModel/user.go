@@ -16,7 +16,7 @@ type User struct {
 	UUID        uuid.UUID `json:"uuid"`
 	Username    string    `json:"userName"`
 	Password    string    `json:"-"`
-	NickName    string    `json:"nickName" gorm:"default:'QMPlusUser'"`
+	NickName    string    `json:"nickName" gorm:"default:'QMPlusUser'"`     // 表字段名默认以大写字母来分隔为下划线
 	HeaderImg   string    `json:"headerImg" gorm:"default:'http://www.henrongyi.top/avatar/lufu.jpg'"`
 	Authority   Authority `json:"authority" gorm:"ForeignKey:AuthorityId;AssociationForeignKey:AuthorityId"`
 	AuthorityId string    `json:"-" gorm:"default:888"`
