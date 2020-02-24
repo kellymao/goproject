@@ -20,48 +20,47 @@ Vue.use(Router)
 let routes = [{
     path: '/login',
     component: Login,
-    name: '',
+    name: 'login',
     hidden: true
 },
-    {
-        path: '/404',
-        component: NotFound,
-        name: '',
-        hidden: true
-    },
-    //{ path: '/main', component: Main },
-    {
-        path: '/',
-        component: Home,
-        name: '导航一',
-        iconCls: 'ios-home', //图标样式class
-        children: [
-            { path: '/main', component: Main, name: '主页', hidden: true },
-            { path: '/table', component: Table, name: '表格' },
-            { path: '/form', component: Form, name: '表单' },
-            { path: '/user', component: user, name: '列表' },
-        ]
-    },
-    {
-        path: '/',
-        component: Home,
-        name: '导航二',
-        iconCls: 'ios-paw',
-        children: [
-            { path: '/page4', component: Page4, name: '页面4' },
-            { path: '/page5', component: Page5, name: '页面5' }
-        ]
-    },
-    {
-        path: '/',
-        component: Home,
-        name: '',
-        iconCls: 'social-freebsd-devil',
-        leaf: true, //只有一个节点
-        children: [
-            { path: '/page6', component: Page6, name: '导航三' }
-        ]
-    },
+    // {
+    //     path: '/404',
+    //     component: NotFound,
+    //     name: '',
+    //     hidden: true
+    // },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '导航一',
+    //     iconCls: 'ios-home', //图标样式class
+    //     children: [
+    //         { path: '/main', component: Main, name: '主页', hidden: true },
+    //         { path: '/table', component: Table, name: '表格' },
+    //         { path: '/form', component: Form, name: '表单' },
+    //         { path: '/user', component: user, name: '列表' },
+    //     ]
+    // },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '导航二',
+    //     iconCls: 'ios-paw',
+    //     children: [
+    //         { path: '/page4', component: Page4, name: '页面4' },
+    //         { path: '/page5', component: Page5, name: '页面5' }
+    //     ]
+    // },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '',
+    //     iconCls: 'social-freebsd-devil',
+    //     leaf: true, //只有一个节点
+    //     children: [
+    //         { path: '/page6', component: Page6, name: '导航三' }
+    //     ]
+    // },
 
     // {
     //     path: '/',
@@ -73,7 +72,7 @@ let routes = [{
     //     ]
     // },
 
-    //
+
     // {
     //     path: '*',
     //     hidden: true,

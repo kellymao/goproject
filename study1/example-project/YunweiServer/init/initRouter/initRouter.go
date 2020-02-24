@@ -14,6 +14,7 @@ func InitRouter() *gin.Engine {
 	//Router.Use(middleware.Logger())
 	//router.InitUserRouter(Router)                  // 注册用户路由
 	router.InitBaseRouter(Router)
+	router.InitMenuRouter(Router)
 	/*	router.InitBaseRouter(Router)                  // 注册基础功能路由
 		router.InitMenuRouter(Router)                  // 注册menu路由
 		router.InitAuthorityRouter(Router)             // 注册角色路由

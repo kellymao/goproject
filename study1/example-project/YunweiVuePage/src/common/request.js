@@ -35,7 +35,6 @@ service.interceptors.response.use(
     response => {
 
         if (response.data.success) {
-            console.log("yyyyyxxxx");
             return response.data
         } else {
             /*Message({
@@ -47,6 +46,8 @@ service.interceptors.response.use(
             if (response.data.data && response.data.data.reload) {
                 store.commit('LoginOut')
             }
+
+
             return Promise.reject(response.data.msg)
         }
     },

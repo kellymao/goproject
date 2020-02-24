@@ -18,43 +18,59 @@ type Menu struct {
 
 }
 
+func (m *Menu) TestMenu()[]Menu{
+	var rel []Menu 
+	return rel
+}
 
-func (m *Menu) GetMenu (id string) ([]*Menu,error) {
+func (m *Menu) GetMenu (id string) ([]Menu,error) {
 
-	var result []*Menu = make([]*Menu ,0 )
+	var result []Menu
 
-	err := qmsql.DEFAULTDB.Where("authority_id=? and parent_id = 0 ",id).Find(&result).Error
+	err := qmsql.DEFAULTDB.Where("authority_id=? and parent_id = 0 ",id).Find(&result).Error //delete_at 有值的不会显示出来
 	if err!=nil {
 		return result,err
 	}
 
-	for _, rel := range result{
+	//for _, rel := range result{
+	//
+	//	err = m.GetChildMenu(&rel)
+	//	if err!=nil{
+	//		return result,err
+	//	}
+	//
+	//}
 
-		err = rel.GetChildMenu()
-		if err!=nil{
-			return result,err
-		}
 
-	}
-
-
-	fmt.Printf("%+v\n", result)
+	//fmt.Printf("返回： %+v\n", result)
 	return result,nil
 
 }
 
 
 
-func (m *Menu) GetChildMenu() error {
+func (m *Menu) GetChildMenu(parent_menu *Menu)( err error)  {
 
-	var childmenu []Menu
-	err := qmsql.DEFAULTDB.Where("authority_id=? and parent_id = ? ",m.AuthorityId , m.Menuid).Find(&childmenu).Error
+	var child_menu []Menu
+	err = qmsql.DEFAULTDB.Where("authority_id=? and parent_id = ? ",parent_menu.AuthorityId , parent_menu.Menuid).Find(&child_menu).Error
 
 	if err!=nil{
-		return err 
+		return
 	}
 
-	m.Children = childmenu
+	if len(child_menu) == 0 {
+
+		return nil
+	}
+	for _, rel:= range child_menu{
+		parent_menu.Children = append(parent_menu.Children,rel)
+		err = m.GetChildMenu(&rel)
+		if err!=nil {
+			return
+		}
+
+	}
+	fmt.Printf("返回childmenu ： %+v\n", child_menu)
 	return nil 
 
 

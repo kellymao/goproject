@@ -33,9 +33,9 @@ const mutations = {
 
     setUserInfo(state, userInfo) {
         // 这里的 `state` 对象是模块的局部状态
-        state.userInfo = userInfo
+        state.userInfo = userInfo // userInfo:{"ID":1,"CreatedAt":"2019-09-13T17:23:46+08:00","UpdatedAt":"2019-10-21T11:16:03+08:00","DeletedAt":null,"uuid":"ce0d6685-c15f-4126-a5b4-890bc9d2356d","userName":"admin","nickName":"超级管理员","headerImg":"http://www.henrongyi.top/avatar/lufu.jpg","authority":{"ID":0,"CreatedAt":"0001-01-01T00:00:00Z","UpdatedAt":"0001-01-01T00:00:00Z","DeletedAt":null,"authorityId":"","authorityName":""}}}
 
-        sessionStorage.setItem('user', userInfo.user);
+        sessionStorage.setItem('user', userInfo.userName);
     },
     setToken(state, token) {
         // 这里的 `state` 对象是模块的局部状态
