@@ -97,6 +97,10 @@ github.com/tools/godep
 /goworkspace/bin/godep get -v
 
 
+###### 权限的介绍：
+
+某个组拥有对应的菜单权限和api权限。
+某一个用户属于 一个组， 拥有这个组对应的权限
 
 ==========
 

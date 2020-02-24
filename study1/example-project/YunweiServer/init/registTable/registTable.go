@@ -10,5 +10,6 @@ func RegistTable(db *gorm.DB) {
 	//db.AutoMigrate(dbModel.User{}, dbModel.Authority{}, dbModel.Menu{}, dbModel.Api{}, dbModel.ApiAuthority{}, dbModel.BaseMenu{}, dbModel.FileUploadAndDownload{})
 	db.AutoMigrate(dbModel.User{})
 	db.AutoMigrate(dbModel.Authority{})
+	db.AutoMigrate(dbModel.Menu{})
 }
 
