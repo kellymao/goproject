@@ -13,23 +13,18 @@ router.beforeEach((to, from, next) => {
     // console.log('asyncRouterFlag is ' + asyncRouterFlag);
 
 
-
-    console.log(router);
-    //let token = JSON.parse(sessionStorage.getItem('token'));
+  //let token = JSON.parse(sessionStorage.getItem('token'));
     let token = sessionStorage.getItem('token');
 
     if (token) {
         if (!asyncRouterFlag){ // 浏览器每次打开一个新页面时，只执行一次
             asyncRouterFlag = true ;
             store.dispatch('SetAsyncRouter')
-            const asyncRouters = store.getters['asyncRouters']
-            console.log("-----------");
-            console.log(asyncRouters);
-            console.log("-----------");
-            router.options.routes = router.options.routes.concat(asyncRouters);
-            router.addRoutes(asyncRouters); // 不能实时更新
-
-            console.log(router.options);
+            //
+            // router.options.routes = router.options.routes.concat(asyncRouters);
+            // router.addRoutes(asyncRouters); // 不能实时更新
+            //
+            // console.log(router.options);
 
 
 

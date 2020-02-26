@@ -17,7 +17,9 @@ type BaseMenu struct {
 	Name      string `json:"name"`
 	Hidden    bool   `json:"hidden"`
 	Component string `json:"component"`
-	Meta      `json:"meta"`
+	//Meta      `json:"meta"`
+	Title string `json:"title"`
+	Icon  string `json:"iconCls"`
 	NickName  string     `json:"nickName"`
 	Children  []BaseMenu `json:"children"`
 }

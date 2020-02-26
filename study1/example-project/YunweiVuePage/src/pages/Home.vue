@@ -93,7 +93,7 @@
                 <Menu :mode="modeType" theme="dark" width="auto" :active-name="this.$route.path" :open-names="openNames" @on-select="menuSelect" accordion>
                      <div class="layout-logo-left">
                          <Icon type="paper-airplane" :size="logoSize" v-show="logoIsDisplay"></Icon>
-                         <span class="layout-text"> Admin 管理系统</span>
+                         <span class="layout-text" style="color: white;" > Admin 管理系统</span>
                      </div>
                    <template v-for="(item,index) in $router.options.routes" v-if="spanLeft >= 5 && !item.hidden">  
                         <Submenu :name="item.name" v-if="!item.leaf">

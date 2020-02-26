@@ -18,18 +18,28 @@ type Menu struct {
 
 }
 
-func (m *Menu) TestMenu()[]Menu{
-	var rel []Menu 
-	return rel
-}
+func (m *Menu) TestMenu() []Menu {
+	fmt.Println("test")
 
-func (m *Menu) GetMenu (id string) ([]Menu,error) {
+	var i []int
+	fmt.Printf("%+v \n ",i)
+	i = make([]int,0 )
+	fmt.Printf("%+v \n ",i)
 
 	var result []Menu
 
-	err := qmsql.DEFAULTDB.Where("authority_id=? and parent_id = 0 ",id).Find(&result).Error //delete_at 有值的不会显示出来
+	result = append(result,Menu{Menuid:"999"})
+	fmt.Println(result)
+	return result
+}
+
+func (m *Menu) GetMenu (id string) (result []Menu,err error) {
+
+
+	err = qmsql.DEFAULTDB.Where("authority_id=? and parent_id = 0 ",888).Find(&result).Error //delete_at 有值的不会显示出来
 	if err!=nil {
-		return result,err
+		fmt.Println("ERROR:", err)
+		return
 	}
 
 	//for _, rel := range result{
@@ -41,9 +51,18 @@ func (m *Menu) GetMenu (id string) ([]Menu,error) {
 	//
 	//}
 
+	for i:=0 ; i<len(result); i++ {
 
-	//fmt.Printf("返回： %+v\n", result)
-	return result,nil
+		err = m.GetChildMenu(&result[i])
+		if err!=nil{
+			fmt.Println("ERROR:", err)
+
+			return
+		}
+	}
+
+	fmt.Printf("返回： %+v\n", result)
+	return
 
 }
 
@@ -62,14 +81,19 @@ func (m *Menu) GetChildMenu(parent_menu *Menu)( err error)  {
 
 		return nil
 	}
-	for _, rel:= range child_menu{
-		parent_menu.Children = append(parent_menu.Children,rel)
-		err = m.GetChildMenu(&rel)
-		if err!=nil {
+
+	parent_menu.Children =  child_menu
+
+	for i:=0 ; i<len(parent_menu.Children); i++ {
+
+		err = m.GetChildMenu(&parent_menu.Children[i])
+		if err!=nil{
+			fmt.Println("ERROR:", err)
+
 			return
 		}
-
 	}
+
 	fmt.Printf("返回childmenu ： %+v\n", child_menu)
 	return nil 
 

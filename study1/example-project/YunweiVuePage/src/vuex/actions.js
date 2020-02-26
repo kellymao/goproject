@@ -6,6 +6,7 @@ import router from '@/router/index'
 
 import Home from '@/pages/Home.vue'
 import echarts from '@/pages/charts/echarts.vue'
+import {prase_route} from "../common/parse_component";
 
 
 export const increment = ({commit}) => {
@@ -70,13 +71,29 @@ export const  SetAsyncRouter = ({commit}) => {
     getmenu().then(res=>{
 
 
-        console.log(res);
 
 
 
         if (res.success) {
 
-            commit('setAsyncRouter', res.data.menu)
+          const baseRouter = res.data.menu ;  // 处理一个菜单列表
+
+          baseRouter.push({
+            path: '*',
+            name: 'other',
+            hidden: true,
+            redirect: '/404'
+
+
+          })
+
+          prase_route(baseRouter);
+
+          router.options.routes = router.options.routes.concat(baseRouter); // 静态路由和动态路由合并后，重新赋值。
+          router.addRoutes(baseRouter); // 不能实时更新
+
+          console.log(router.options.routes);
+          commit('setAsyncRouter', router.options.routes)
         }
 
 

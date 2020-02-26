@@ -1,12 +1,11 @@
 package main
 
-
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"log"
 	"study1/example-project/YunweiServer/model/dbModel"
+	"log"
 )
 
 var DEFAULTDB *gorm.DB
@@ -45,8 +44,8 @@ func main(){
 	InitMysql(cfg)
 	//
 	//var result []dbModel.Menu
-	////err := DEFAULTDB.Find(&result).Error
-	////fmt.Println(err)
+	//////err := DEFAULTDB.Find(&result).Error
+	//////fmt.Println(err)
 	//err := DEFAULTDB.Where("authority_id=? and parent_id = 0 ",888).Find(&result).Error
 	//if err!=nil {
 	//	fmt.Println(err)
@@ -60,9 +59,10 @@ func main(){
 	//_ = DEFAULTDB.Find(&users).Error
 	//fmt.Println(users)
 
-	aaa := &dbModel.Menu{}
-	aaa.TestMenu()
-	fmt.Println(aaa)
-	//_, _ = aaa.GetMenu("888")
+	aaa := &dbModel.Menu{AuthorityId: "888", Menuid: "2"}
+	_, _ = aaa.GetMenu(888)
+	//_ = aaa.GetChildMenu(&dbModel.Menu{AuthorityId: "888", Menuid: "2"})
+	fmt.Printf("%T \n ",aaa)
+	//aaa.TestMenu()
 
 }

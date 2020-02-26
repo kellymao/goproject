@@ -5,12 +5,10 @@ import VueRouter from 'vue-router'
 import store from './vuex/store'
 import Vuex from 'vuex'
 import router from './router'
-import Mock from './mock'
 import iview from 'iview'
 import 'iview/dist/styles/iview.css'
 import VueClipboard from 'vue-clipboard2'
 
-Mock.bootstrap();
 
 Vue.use(VueClipboard)
 Vue.use(VueRouter)
