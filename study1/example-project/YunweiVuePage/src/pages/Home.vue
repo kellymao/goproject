@@ -113,13 +113,13 @@
                         </template>  
                    </template>
                    <template v-for="(item,index) in $router.options.routes" v-if="spanLeft < 5 && !item.hidden">
-                        <Dropdown placement="right-start" class="_dropdownList" transfer="true" @on-click="dropDown">
+                        <Dropdown placement="right-start" class="_dropdownList" transfer=true @on-click="dropDown">
                             <a href="javascript:void(0)">
                                 <Icon :type="item.iconCls" class="_iconCls ivu-col-span-1" :size="iconSize"></Icon>
                             </a>
                             <DropdownMenu slot="list">
                                  <DropdownItem  v-if="!item.name" :name="item.children[0].path">{{item.children[0].name}}</DropdownItem>
-                                  <Dropdown placement="right-start" transfer="true" v-if="item.children && item.name">
+                                  <Dropdown placement="right-start" transfer=true v-if="item.children && item.name">
                                       <DropdownItem>
                                         {{item.name}}
                                         <Icon type="ios-arrow-right"></Icon>
@@ -189,7 +189,7 @@
         data () {
             return {
                 openNames: [this.$route.matched[0].name],
-                curUserName : sessionStorage.getItem('user').replace(/\"/g, ""),
+                curUserName : localStorage.getItem('user').replace(/\"/g, ""),
                 modeType: "vertical",
                 spanLeft: 5,
                 spanRight: 19,

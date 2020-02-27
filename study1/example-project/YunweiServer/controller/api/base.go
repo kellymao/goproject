@@ -33,6 +33,7 @@ func Login(c *gin.Context) {
 		servers.ReportFormat(c, false, fmt.Sprintf("用户名密码错误或%v", err), gin.H{})
 	} else {
 		tokenNext(c, *user)
+
 	}
 }
 
@@ -48,7 +49,8 @@ func tokenNext(c *gin.Context, user dbModel.User) {
 		AuthorityId: user.AuthorityId,
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: int64(time.Now().Unix() - 1000),       // 签名生效时间
-			ExpiresAt: int64(time.Now().Unix() + 60*60*24*7), // 过期时间 一周
+			//ExpiresAt: int64(time.Now().Unix() + 60*60*24*7), // 过期时间 一周
+			ExpiresAt: time.Now().Add(1 * time.Minute).Unix(), // 过期时间 一分钟
 			Issuer:    "qmPlus",                              //签名的发行者
 		},
 	}

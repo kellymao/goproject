@@ -61,7 +61,7 @@ func (m *Menu) GetMenu (id string) (result []Menu,err error) {
 		}
 	}
 
-	fmt.Printf("返回： %+v\n", result)
+	//fmt.Printf("返回： %+v\n", result)
 	return
 
 }
@@ -94,7 +94,7 @@ func (m *Menu) GetChildMenu(parent_menu *Menu)( err error)  {
 		}
 	}
 
-	fmt.Printf("返回childmenu ： %+v\n", child_menu)
+	//fmt.Printf("返回childmenu ： %+v\n", child_menu)
 	return nil 
 
 

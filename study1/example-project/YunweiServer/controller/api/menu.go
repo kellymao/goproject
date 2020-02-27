@@ -16,7 +16,7 @@ func GetMenu(c *gin.Context){
 	claimsuse := claims.(*middleware.CustomClaims)
 	menus := &dbModel.Menu{}
 
-	fmt.Println(claimsuse.AuthorityId)
+	fmt.Println(claimsuse)
 	rel ,err := menus.GetMenu(claimsuse.AuthorityId)
 	if err!=nil{
 		fmt.Println(err)

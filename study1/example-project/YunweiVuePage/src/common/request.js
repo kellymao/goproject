@@ -14,7 +14,8 @@ const service = axios.create({
 //http request 拦截器
 service.interceptors.request.use(
     config => {
-        const token = store.getters['token']
+        //const token = store.getters['token']
+        const token = localStorage.getItem('token');
         config.data = JSON.stringify(config.data);
         config.headers = {
             'Content-Type': 'application/json',
