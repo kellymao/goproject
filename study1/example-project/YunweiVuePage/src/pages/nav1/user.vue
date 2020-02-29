@@ -1,9 +1,61 @@
 <template>
+    <!--
     <Table border :columns="columns5" :data="data5"></Table>
+    -->
+
+    <Row>
+        <!--左边树-->
+        <i-col  :xs="8" :sm="4" :md="4" :lg="3"  >
+
+            <CrudTree ref="crudTree" :treeOptions="treeOptions" @on-data-loaded="onTreeDataLoaded" @on-select="onTreeChange">
+                <template slot="treeTop">
+                    <h1>准备开始搞！！！</h1>
+                </template>
+            </CrudTree>
+        </i-col>
+
+        <!--左边表格-->
+        <i-col  :xs="16" :sm="20" :md="20" :lg="21"  >
+
+        </i-col>
+    </Row>
 </template>
 <script>
+    import CrudTree from '@/component/tree/CrudTree.vue';
+
+    /**
+     * 树参数
+     */
+    const treeOptions = {
+        dataUrl: '/sys/role/list',
+        categoryField: 'roleId',
+        manageUrl: '/role',
+        showToolbar: true
+    };
+
+
     export default {
         data () {
+
+            return {
+                treeOptions
+            }
+        },
+
+        components: {
+            CrudTree
+        },
+        methods:{
+
+            onTreeDataLoaded(){
+
+            },
+            onTreeChange(){
+
+            }
+
+        }
+            /*
             return {
                 columns5: [
                     {
@@ -53,5 +105,8 @@
                 ]
             }
         }
+        */
     }
+
+
 </script>
