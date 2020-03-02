@@ -38,14 +38,3 @@ export const getmenu = params =>{
 
 
 };
-
-
-export const getroledata = (params) => {
-
-    alert(params);
-    return service({
-        url: "/api/getRoleList",
-        method: 'post',
-        data: params
-    })
-}
