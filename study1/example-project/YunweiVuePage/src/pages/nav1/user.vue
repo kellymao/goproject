@@ -9,7 +9,7 @@
 
             <CrudTree ref="crudTree" :treeOptions="treeOptions" @on-data-loaded="onTreeDataLoaded" @on-select="onTreeChange">
                 <template slot="treeTop">
-                    <h1>准备开始搞！！！</h1>
+
                 </template>
             </CrudTree>
         </i-col>
