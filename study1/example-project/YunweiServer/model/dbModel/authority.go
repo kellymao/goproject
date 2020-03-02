@@ -2,10 +2,8 @@ package dbModel
 
 import (
 	"github.com/jinzhu/gorm"
-	//"github.com/pkg/errors"
-	//"main/controller/servers"
-	//"main/init/qmsql"
-	//"main/model/modelInterface"
+	"gin-vue-admin/QMPlusServer/model/modelInterface"
+	"study1/example-project/YunweiServer/controller/servers"
 )
 
 type Authority struct {
@@ -31,10 +29,10 @@ func (a *Authority) DeleteAuthority() (err error) {
 	return err
 }
 
-
+*/
 
 // 分页获取数据  需要分页实现这个接口即可
-func (a *Authority) GetInfoList(info modelInterface.PageInfo) (err error, list interface{}, total int) {
+func (a *Authority) GetRoleList(info modelInterface.PageInfo) (err error, list interface{}, total int) {
 	// 封装分页方法 调用即可 传入 当前的结构体和分页信息
 	err, db, total := servers.PagingServer(a, info)
 	if err != nil {
@@ -45,4 +43,3 @@ func (a *Authority) GetInfoList(info modelInterface.PageInfo) (err error, list i
 		return err, authority, total
 	}
 }
-*/
