@@ -11,7 +11,14 @@ func PagingServer(paging modelInterface.Paging, info modelInterface.PageInfo) (e
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)
 	err = qmsql.DEFAULTDB.Model(paging).Count(&total).Error
-	db = qmsql.DEFAULTDB.Limit(limit).Offset(offset).Order("id desc")
+
+	if limit == 0 {
+		db = qmsql.DEFAULTDB.Order("id desc")
+
+	}else{
+		db = qmsql.DEFAULTDB.Limit(limit).Offset(offset).Order("id desc")
+
+	}
 	return err, db, total
 }
 

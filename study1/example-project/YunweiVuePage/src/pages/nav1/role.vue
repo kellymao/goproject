@@ -1,13 +1,13 @@
 <template>
 <div>
   <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
-    <FormItem prop="rolename">
-      <Input type="text" v-model="formInline.rolename" placeholder="角色名">
+    <FormItem prop="authorityName">
+      <Input type="text" v-model="formInline.authorityName" placeholder="角色名">
         <!--<Icon type="ios-person-outline" slot="prepend"></Icon>-->
       </Input>
     </FormItem>
-    <FormItem prop="roleid">
-      <Input type="text" v-model="formInline.roleid" placeholder="角色id">
+    <FormItem prop="authorityId">
+      <Input type="text" v-model="formInline.authorityId" placeholder="角色id">
         <!--<Icon type="ios-person-outline" slot="prepend"></Icon>-->
       </Input>
     </FormItem>
@@ -37,6 +37,8 @@
     name:'role',
     data () {
       return {
+        page: 0,
+        pageSize: 0,
         searchInfo:{},
         columns12: [
           {
@@ -45,7 +47,7 @@
           },
           {
             title: '创建时间',
-            key: 'created_at'
+            key: 'CreatedAt'
           },
           {
             title: '角色名',
@@ -61,28 +63,28 @@
         data6: [
           {
             authorityId: '888',
-            created_at: '2019-09-08 16:18:31',
+            CreatedAt: '2019-09-08 16:18:31',
             authorityName: '普通用户'
           },
           {
             authorityId: '888',
-            created_at: '2019-09-08 16:18:31',
+            CreatedAt: '2019-09-08 16:18:31',
             authorityName: '普通用户'
           }
 
         ],
         formInline: {
-          rolename: '',
-          roleid: ''
+          authorityName: '',
+          authorityId: ''
         },
         ruleInline: {
-          rolename: [
-            { required: true, message: 'Please fill in the user name', trigger: 'blur' }
-          ],
-          roleid: [
-            { required: true, message: 'Please fill in the password.', trigger: 'blur' },
-            //{ type: 'string', min: 6, message: 'The password length cannot be less than 6 bits', trigger: 'blur' }
-          ]
+          // name: [
+          //   { required: true, message: 'Please fill in the user name', trigger: 'blur' }
+          // ],
+          // passwd: [
+          //   { required: true, message: 'Please fill in the password.', trigger: 'blur' },
+          //   //{ type: 'string', min: 6, message: 'The password length cannot be less than 6 bits', trigger: 'blur' }
+          // ]
         }
       }
     },
@@ -103,6 +105,7 @@
             //this.$Message.success('Success!');
 
             this.searchInfo =  this.formInline;
+            this.getTableData(0,0,this.searchInfo);
           } else {
             this.$Message.error('条件输入错误!');
           }
@@ -112,15 +115,16 @@
       },
 
 
-      getTableData(page = this.page, pageSize = this.pageSize ){
+      getTableData(page = this.page, pageSize = this.pageSize, searchInfo = {} ){
 
 
-        getroledata({ page, pageSize, ...this.searchInfo }).then(res=>{
+        alert(JSON.stringify(searchInfo));
+        getroledata({ page, pageSize, ...searchInfo }).then(res=>{
 
 
           if (res.success) {
 
-            this.data6 =res.data.data;
+            this.data6 =res.data.list;
             this.total = res.data.total;
             this.page = res.data.page;
             this.pageSize = res.data.pageSize;

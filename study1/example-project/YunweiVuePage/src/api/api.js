@@ -44,7 +44,7 @@ export const getroledata = (params) => {
 
     alert(params);
     return service({
-        url: "/api/getRoleList",
+        url: "/role/getrolelist",
         method: 'post',
         data: params
     })
