@@ -12,7 +12,7 @@
         </Form-item>
         <Form-item prop="password">
             <i-input size="large"  type="password" v-model="formLogin.password" placeholder="密码">
-                <Icon type="ios-locked-outline" slot="prepend"></Icon>
+                <Icon type="ios-lock-outline" slot="prepend"></Icon>
             </i-input>
         </Form-item>
           <Form-item class="login-no-bottom">
