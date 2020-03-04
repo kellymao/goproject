@@ -48,4 +48,24 @@ export const getroledata = (params) => {
         method: 'post',
         data: params
     })
-}
+};
+
+export const roleadd = (params) =>{
+
+    return service({
+        url: "/role/roleadd",
+        method: 'post',
+        data: params
+
+    })
+};
+
+export const roledel = (params) =>{
+
+    return service({
+        url: "/role/roledel",
+        method: 'post',
+        data: params
+
+    })
+};

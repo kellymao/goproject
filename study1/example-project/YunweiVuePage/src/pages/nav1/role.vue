@@ -20,18 +20,40 @@
   <div>
     <div class="tooltip">
       <!--增删改按钮-->
-        <i-button type="success" shape="circle" :size="toolbarSize" icon="ios-add" @click="tableAddData()">添 加
+        <i-button type="success" shape="circle"  icon="ios-add" @click="tableAddData()">添 加
         </i-button>
-        <i-button type="success" shape="circle" :size="toolbarSize" icon="ios-add" @click="tableEditData()"
+        <i-button type="success" shape="circle"  icon="ios-add" @click="tableEditData()"
                   :disabled="isSingle">编 辑
         </i-button>
         <Poptip confirm title="您确认删除选中的内容吗？" @on-ok="tableDelData()" placement="bottom-start" transfer>
-          <i-button type="success" shape="circle" icon="ios-trash" :size="toolbarSize"
+          <i-button type="success" shape="circle" icon="ios-trash"
                     :disabled="isMultiple">删 除
           </i-button>
         </Poptip>
       <!--增删改按钮结束-->
+
+      <i-button type='success' shape='circle' icon='ios-add' @click='roleResEdit()' :disabled='isSingle'>角色资源
+      </i-button>
     </div>
+
+    // 角色资源弹出框
+    <Modal title='角色资源' v-model='editVisible'
+           class-name='vertical-center-modal'
+           width='400'
+           :loading='editLoading'
+           @on-ok='roleResEditOk'>
+
+      <DataTree v-model='resIds'
+                ref='resTree'
+                style='height:400px;overflow: auto'
+                dataUrl='/sys/roleRes/getRoleRes'
+                @on-data-loaded='treeLoaded'
+                show-checkbox
+                lazy>
+
+      </DataTree>
+    </Modal>
+
     <div>
   <Table ref="tablerole" border :columns="columns12" :data="data6" @on-selection-change="showselect">
     <template slot-scope="{ row }" slot="name">
@@ -50,7 +72,7 @@
 
   </div>
 
-
+  // 编辑弹出框
   <Modal :title="modal_data.title"
          v-model="modal_data.visible"
          class-name="vertical-center-modal"
@@ -139,6 +161,8 @@
           }
 
         ],
+
+        // 查询框及规则
         formInline: {
           authorityName: '',
           authorityId: ''
@@ -152,6 +176,8 @@
           //   //{ type: 'string', min: 6, message: 'The password length cannot be less than 6 bits', trigger: 'blur' }
           // ]
         },
+
+        // 表格后面的编辑弹出框及规则
         rulemodlerole:{
 
 
@@ -168,7 +194,11 @@
           visible:false ,
           title: '',
           roledata:{},
-        }
+        },
+
+        // 角色资源模态框
+        editVisible: false,
+        editLoading: true,
       }
     },
     computed:{
@@ -183,6 +213,8 @@
       ok(){
 
       },
+
+      // 每行后面的编辑按钮
       show (row) {
         // this.$Modal.info({
         //   title: 'User Info',
@@ -193,10 +225,12 @@
         this.modal_data.roledata = row;
 
       },
+      // 每行后面的删除按钮
       remove (row) {
         alert(JSON.stringify(row.ID));
       },
 
+      // 查询条件提交按钮
       handleSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
@@ -213,6 +247,7 @@
       },
 
 
+      // 获取表格的数据
       getTableData(page = this.page, pageSize = this.pageSize, searchInfo = {} ){
 
 
@@ -235,54 +270,66 @@
 
       },
 
+      // 表格多选框，选择有变动时触发
       showselect(selection){
         this.selections = selection;
-        alert(selection.length);
-        alert(JSON.stringify(selection));
+        // alert(selection.length);
+        // alert(JSON.stringify(selection));
       },
+
+      // 表格上面的新加和编辑调用此方法
       showEdit(post_api,name,obj){
 
         const editOptions = {
           labelWidth:80,
           dynamic: [
             [
-              {name: 'id', hidden: true},
-              {name: 'name', type: 'text', span: 24, label: '角色名', rules: {required: true}},
-              {name: 'description', type: 'editor', textarea: {minRows: 2, maxRows: 3}, span: 24, label: '角色描述'},
-              {
-                name: 'status',
-                openText: '启用',
-                closeText: '禁用',
-                type: 'switch',
-                span: 24,
-                label: '角色状态',
-                value: 1,
-                trueValue: 1,
-                falseValue: 0,
-                rules: {required: true, type: 'number'}
-              }
+              {name: 'ID',  hidden: false, label: 'ID',disabled: true},
+              {name: 'authorityId', type: 'text', span: 24, label: '角色id', rules: {required: true}},
+              {name: 'authorityName', type: 'editor', textarea: {minRows: 2, maxRows: 3}, span: 24, label: '角色名',rules: {required: true}},
+              // {
+              //   name: 'status',
+              //   openText: '启用',
+              //   closeText: '禁用',
+              //   type: 'switch',
+              //   span: 24,
+              //   label: '角色状态',
+              //   value: 1,
+              //   trueValue: 1,
+              //   falseValue: 0,
+              //   rules: {required: true, type: 'number'}
+              // }
             ]
           ],
         };
 
+        alert(this.$router.currentRoute.path + '/edit');
         this.$router.push({
           path: this.$router.currentRoute.path + '/edit',
           query: {options: editOptions, action: post_api, data: obj}
         });
       },
+
+      // 表格上面的新加按钮
       tableAddData(){
 
         this.showEdit(roleadd,'添加',{})
       },
+
+      // 表格上面的编辑按钮
       tableEditData(){
         this.showEdit(roleadd,'编辑',this.selections[0])
       },
+
+      // 表格上面的删除按钮
       tableDelData(){}
 
 
 
     },
     mounted() {
+
+      // 页面加载时刷新表格
       this.getTableData()
     }
   }

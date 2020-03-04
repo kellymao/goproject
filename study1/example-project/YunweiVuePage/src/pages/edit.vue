@@ -7,7 +7,7 @@
 <template>
     <div class="main-view main-view-full" style="padding-top: 20px">
         <row style="height: 80px">
-            <Button type="text" icon='chevron-left' @click='back'>返 回</Button>
+            <Button type="text" icon='ios-arrow-back' @click='back'>返 回</Button>
         </row>
         <row class="edit-row" type="flex" justify="center">
             <i-col span="22">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    //import {FormDynamic, PermsValid, CrudView} from 'components/';
+    import FormDynamic from '@/component/form/FormDynamic';
 
     export default {
         props: {},
@@ -43,38 +43,8 @@
         computed: {},
         methods: {
             ok () {
-                this.$refs.dynamicForm.submit((param) => {
-                    console.log(param);
-                    debugger;
-                    if (this.options.submitBeforeCallBack) {
-                        if (!this.options.submitBeforeCallBack(param)) {
-                            return;
-                        }
-                    }
-                    if (this.options.submitBefore) {
-                        this.options.submitBefore(param);
-                    }
-                    // 发送请求
-                    if (this.action.postUrl !== null) {
-                        this.loading = true;
-                        this.$http.apiPost(this.action.postUrl, param).then((res) => {
-                            this.loading = false;
-                            if (!res.success) {
-                                this.$http.handleError(res);
-                            } else {
-                                this.$Message.success('提交成功');
-                                if (res.data.id != null) {
-                                    param.id = res.data.id;
-                                }
-                                if (this.options.editSuccess != null) {
-                                    this.options.editSuccess();
-                                }
-                                if (this.options.successBack == null || this.options.successBack) {
-                                    this.$router.go(-1);
-                                }
-                            }
-                        });
-                    }
+                this.$refs.dynamicForm.submit(() => {
+
                 }, (res) => {
                     // 表单验证失败
                 });
@@ -84,19 +54,24 @@
             }
         },
         mounted () {
-
-        },
-        activated () {
+            alert('active');
             this.options = this.$route.query.options;
             this.action = this.$route.query.action;
             this.data = this.$route.query.data;
             console.log(this.$route);
             console.log(this.options);
             console.log(this.data);
+
+            // 在created()钩子函数执行的时候DOM 其实并未进行任何渲染，而此时进行DOM操作并无作用，而在created()里使用this.$nextTick()可以等待dom生成以后再来获取dom对象
             this.$nextTick(() => {
-                this.$refs['dynamicForm'].setFormData(this.data);
+
+                if (JSON.stringify(this.data) !== '{}') {
+                    alert(" this.data  is not null");
+                    this.$refs['dynamicForm'].setFormData(this.data);
+
+                }
             });
         },
-        components: {CrudView, FormDynamic, PermsValid}
+        components: { FormDynamic}
     };
 </script>
