@@ -216,7 +216,7 @@
       getTableData(page = this.page, pageSize = this.pageSize, searchInfo = {} ){
 
 
-        alert(JSON.stringify(searchInfo));
+        //alert(JSON.stringify(searchInfo));
         getroledata({ page, pageSize, ...searchInfo }).then(res=>{
 
 
@@ -244,7 +244,25 @@
 
         const editOptions = {
           labelWidth:80,
-          dynamic: {},
+          dynamic: [
+            [
+              {name: 'id', hidden: true},
+              {name: 'name', type: 'text', span: 24, label: '角色名', rules: {required: true}},
+              {name: 'description', type: 'editor', textarea: {minRows: 2, maxRows: 3}, span: 24, label: '角色描述'},
+              {
+                name: 'status',
+                openText: '启用',
+                closeText: '禁用',
+                type: 'switch',
+                span: 24,
+                label: '角色状态',
+                value: 1,
+                trueValue: 1,
+                falseValue: 0,
+                rules: {required: true, type: 'number'}
+              }
+            ]
+          ],
         };
 
         this.$router.push({
