@@ -36,20 +36,19 @@
       </i-button>
     </div>
 
-    // 角色资源弹出框
+    <!--角色资源弹出框-->
     <Modal title='角色资源' v-model='editVisible'
            class-name='vertical-center-modal'
            width='400'
            :loading='editLoading'
            @on-ok='roleResEditOk'>
 
-      <DataTree v-model='resIds'
+      <DataTree
                 ref='resTree'
                 style='height:400px;overflow: auto'
                 dataUrl='/sys/roleRes/getRoleRes'
-                @on-data-loaded='treeLoaded'
-                show-checkbox
-                lazy>
+                :show-checkbox = 'showcheckbox'
+                :lazy='lazy'>
 
       </DataTree>
     </Modal>
@@ -72,7 +71,7 @@
 
   </div>
 
-  // 编辑弹出框
+  <!-- 编辑弹出框 -->
   <Modal :title="modal_data.title"
          v-model="modal_data.visible"
          class-name="vertical-center-modal"
@@ -113,6 +112,7 @@
 <script>
 
   import { getroledata,roleadd,roledel } from '@/api/api'
+  import DataTree from '@/component/tree/DataTree.vue'
 
 
   export default {
@@ -199,6 +199,9 @@
         // 角色资源模态框
         editVisible: false,
         editLoading: true,
+        showcheckbox:true,
+        lazy:false,
+
       }
     },
     computed:{
@@ -284,8 +287,8 @@
           labelWidth:80,
           dynamic: [
             [
-              {name: 'ID',  hidden: false, label: 'ID',disabled: true},
-              {name: 'authorityId', type: 'text', span: 24, label: '角色id', rules: {required: true}},
+              {name: 'ID',  hidden: false, label: 'ID',disabled: true,span: 12},
+              {name: 'authorityId', type: 'text', span: 12, label: '角色id', rules: {required: true}},
               {name: 'authorityName', type: 'editor', textarea: {minRows: 2, maxRows: 3}, span: 24, label: '角色名',rules: {required: true}},
               // {
               //   name: 'status',
@@ -322,7 +325,19 @@
       },
 
       // 表格上面的删除按钮
-      tableDelData(){}
+      tableDelData(){},
+
+
+      roleResEdit(){
+        this.editVisible = true;
+      },
+      roleResEditOk(){
+        this.$refs.resTree.submit();
+
+
+
+      },
+
 
 
 
@@ -331,7 +346,8 @@
 
       // 页面加载时刷新表格
       this.getTableData()
-    }
+    },
+    components: {DataTree}
   }
 </script>
 
