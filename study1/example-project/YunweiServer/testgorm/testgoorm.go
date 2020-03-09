@@ -6,9 +6,8 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
-
-
-
+	"log"
+	"study1/example-project/YunweiServer/model/dbModel"
 
 	"github.com/dgrijalva/jwt-go"
 
@@ -26,7 +25,7 @@ type Admin struct {
 	Config   string
 }
 
-/*
+
 //初始化数据库并产生数据库全局变量
 func InitMysql(admin Admin) *gorm.DB {
 	if db, err := gorm.Open("mysql", admin.Username+":"+admin.Password+"@("+admin.Path+")/"+admin.Dbname+"?"+admin.Config); err != nil {
@@ -39,7 +38,7 @@ func InitMysql(admin Admin) *gorm.DB {
 	return DEFAULTDB
 }
 
-
+/*
 // deleted_at = null ， 有值的goorm以为此记录被删除，select出不来结果。搞半天
 func test_db(){
 
@@ -160,9 +159,42 @@ func test_token(){
 	fmt.Println(claims)
 }
 
+func test_restree(){
+	cfg := Admin{
+		Username : "root",
+		Password: "12345678",
+		Path: "127.0.0.1:3306",
+		Dbname: "yyserver",
+		Config: "charset=utf8&parseTime=True&loc=Local",
+	}
+	InitMysql(cfg)
+	//
+	//var result []dbModel.Menu
+	//////err := DEFAULTDB.Find(&result).Error
+	//////fmt.Println(err)
+	//err := DEFAULTDB.Where("authority_id=? and parent_id = 0 ",888).Find(&result).Error
+	//if err!=nil {
+	//	fmt.Println(err)
+	//	return
+	//}
+	//fmt.Printf("%+v\n",result)
+	//
+	//
+	//var users []dbModel.User
+	//
+	//_ = DEFAULTDB.Find(&users).Error
+	//fmt.Println(users)
+
+	aaa := &dbModel.Role_to_menu{}
+	result, _ := aaa.Get_restree("888")
+	fmt.Printf("%+v \n ",result)
+
+}
+
 func main(){
 
-	test_token()
+	//test_token()
+	test_restree()
 
 
 }

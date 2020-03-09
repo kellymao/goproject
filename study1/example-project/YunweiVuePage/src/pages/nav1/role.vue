@@ -46,7 +46,7 @@
       <DataTree
                 ref='resTree'
                 style='height:400px;overflow: auto'
-                dataUrl='/sys/roleRes/getRoleRes'
+                dataUrl='/role_menu_tree/getmenutree'
                 :show-checkbox = 'showcheckbox'
                 :lazy='lazy'>
 

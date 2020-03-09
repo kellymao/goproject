@@ -35,7 +35,8 @@
 </template>
 
 <script>
-  import {prase_tree} from "@/common/parse_datatree";
+  import {prase_tree,menutree_convert_checked} from "@/common/parse_datatree";
+  import {get_role_menutree} from "@/api/api";
 
   export default {
     props: {
@@ -72,57 +73,85 @@
        */
       queryData (param) {
 
-        const data3 = [
-          {
-            id: 2,
-            title: '系统管理',
-            expand: true,
-            selected: true,
-            children: [
-              {
-                id:7,
-                title: '表格',
-                expand: false,
-                children: [
-                  {
-                    title: 'leaf 1-1-1',
-                    disabled: true
-                  },
-                  {
-                    title: 'leaf 1-1-2'
-                  }
-                ]
-              },
-              {
-                id:8,
-                title: '表单',
-                expand: false,
-                children: [
-                  {
-                    title: 'leaf 1-2-1',
-                    checked: true
-                  },
-                  {
-                    title: 'leaf 1-2-1'
-                  }
-                ]
-              }
-              ,
-              {
-                id:9,
-                title: '用户管理',
-                expand: false,
-              }
-              ,
-              {
-                id:10,
-                title: '角色管理',
-                expand: false,
-              }
-            ]
+        // const data3 = [
+        //   {
+        //     id: 2,
+        //     title: '系统管理',
+        //     expand: true,
+        //     selected: true,
+        //     children: [
+        //       {
+        //         id:7,
+        //         title: '表格',
+        //         expand: false,
+        //         children: [
+        //           {
+        //             title: 'leaf 1-1-1',
+        //             disabled: true
+        //           },
+        //           {
+        //             title: 'leaf 1-1-2'
+        //           }
+        //         ]
+        //       },
+        //       {
+        //         id:8,
+        //         title: '表单',
+        //         expand: false,
+        //         children: [
+        //           {
+        //             title: 'leaf 1-2-1',
+        //             checked: true
+        //           },
+        //           {
+        //             title: 'leaf 1-2-1'
+        //           }
+        //         ]
+        //       }
+        //       ,
+        //       {
+        //         id:9,
+        //         title: '用户管理',
+        //         expand: false,
+        //       }
+        //       ,
+        //       {
+        //         id:10,
+        //         title: '角色管理',
+        //         expand: false,
+        //       }
+        //     ]
+        //   }
+        // ];
+
+        get_role_menutree(this.dataUrl).then(res=>{
+
+
+          if (res.success) {
+
+            //alert(JSON.stringify(res.data.menu));
+            //menutree_convert_checked(res.data.menu);
+
+            /*
+
+            js 中数组赋值给新数组，原来的数组的值也跟着变了 ？？？？？？
+            因此赋值的是引用。所以原数组值也变了。折腾了半天。
+
+             this.treeData =res.data.menu;
+
+             */
+            const rel = res.data.menu;
+            menutree_convert_checked(rel);
+            this.treeData =rel;
+            console.log(this.treeData);
+
           }
-        ];
-        this.treeData = data3;
+        }).catch(err=>{
+          alert(err);
+        });
+
+
+        //this.treeData = data3;
 
       },
       onSelectChange (slected) {
@@ -156,9 +185,11 @@
       }
     },
     created () {
-      if (!this.lazy) {
-        this.queryData();
-      }
+
+      this.queryData();
+      // if (!this.lazy) {
+      //   this.queryData();
+      // }
     },
     components: {}
   };

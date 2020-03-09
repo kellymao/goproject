@@ -40,80 +40,21 @@ https://www.oschina.net/news/89684/iview-2-5-0
 npm install vuex
 
 
-3.geng xin iview banben
 
-npm i iview@3.2.0
+===================
 
+gorm使用: https://my.oschina.net/lemos/blog/913505?hmsr=studygolang.com
 
-======后端的部署
+rows  和 row ：https://www.cnblogs.com/rickiyang/p/11074162.html
 
+type Result struct {
+    Name string
+    Age  int
+}
 
-golang 在 github 上建立了一个镜像库，如 https://github.com/golang/sys 即是 https://golang.org/x/sys 的镜像库
+var result Result
+db.Table("users").Select("name, age").Where("name = ?", 3).Scan(&result)
 
-✔️ 正确操作方式
+// Raw SQL
+db.Raw("SELECT name, age FROM users WHERE name = ?", 3).Scan(&result)
 
-# 跳转到自己的$GOPATH文件夹
-cd ~/go/src
-# 创建文件夹
-mkdir -p golang.org/x
-cd golang.org/x
-# 拉取github上的golang库包
-git clone https://github.com/golang/sys.git
-git clone https://github.com/golang/text.git
-————————————————
-
-解决：error: RPC failed; curl 56 LibreSSL SSL_read: SSL_ERROR_SYSCALL, errno 54
-   fatal: the remote end hung up unexpectedly
-   fatal: early EOF
-   fatal: index-pack failed
-
-原因： 文件过大，修改buffer 11512M
-
-修改$ git config https.postBuffer 11524288000
-
-
------------------
-
-
-
-1. 安装代码中所有的依赖包
-
-首先： go get -v -u  github.com/fsnotify/fsnotify （需要先安装sys）
-go get -u -v github.com/spf13/viper
-安装godep包： go get -u -v github.com/tools/godep
-
-成功安装后，在$GOPATH的bin目录下会有一个godep可执行的二进制文件，后面执行的命令都是用这个，建议这个目录加入到全局环境变量中
-
-
-$ go get -u -v github.com/tools/godep
-github.com/tools/godep (download)
-github.com/tools/godep/vendor/github.com/kr/text
-github.com/tools/godep/vendor/github.com/pmezard/go-difflib/difflib
-github.com/tools/godep/vendor/github.com/kr/fs
-github.com/tools/godep/vendor/github.com/kr/pretty
-github.com/tools/godep/vendor/golang.org/x/tools/go/vcs
-github.com/tools/godep
-
-
-2. 下载项目中的依赖包
-
-/goworkspace/bin/godep get -v
-
-
-###### 权限的介绍：
-
-某个组拥有对应的菜单权限和api权限。
-某一个用户属于 一个组， 拥有这个组对应的权限
-
-==========
-
-dodep的使用：
-
-godep save     将依赖项输出并复制到Godeps.json文件中
-godep go       使用保存的依赖项运行go工具
-godep get      下载并安装具有指定依赖项的包
-godep path     打印依赖的GOPATH路径
-godep restore  在GOPATH中拉取依赖的版本
-
-
-https://www.liwenzhou.com/posts/Go/go_dependency/

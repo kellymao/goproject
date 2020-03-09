@@ -11,5 +11,6 @@ func RegistTable(db *gorm.DB) {
 	db.AutoMigrate(dbModel.User{})
 	db.AutoMigrate(dbModel.Authority{})
 	db.AutoMigrate(dbModel.Menu{})
+	db.AutoMigrate(dbModel.Role_to_menu{})
 }
 

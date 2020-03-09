@@ -69,3 +69,12 @@ export const roledel = (params) =>{
 
     })
 };
+
+export const get_role_menutree = (url) =>{
+
+    return service({
+        url: url,
+        method: 'post',
+
+    })
+};
