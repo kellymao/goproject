@@ -36,7 +36,8 @@
 
 <script>
   import {prase_tree,menutree_convert_checked} from "@/common/parse_datatree";
-  import {get_role_menutree} from "@/api/api";
+  import {get_role_menutree,save_role_menutree} from "@/api/api";
+
 
   export default {
     props: {
@@ -57,21 +58,23 @@
       lazy: {
         type: Boolean,
         default: false
-      }
+      },
+      roleid:''
     },
     data () {
       return {
         total: 0,
         loading: false,
         treeData: [],
-        mData: []
+        mData: [],
+        tmp_roleid:''
       };
     },
     methods: {
       /**
        * 获取数据
        */
-      queryData (param) {
+      queryData (url=this.dataUrl,roleid=this.roleid) {
 
         // const data3 = [
         //   {
@@ -124,7 +127,7 @@
         //   }
         // ];
 
-        get_role_menutree(this.dataUrl).then(res=>{
+        get_role_menutree({url,roleid}).then(res=>{
 
 
           if (res.success) {
@@ -140,10 +143,9 @@
              this.treeData =res.data.menu;
 
              */
-            const rel = res.data.menu;
-            menutree_convert_checked(rel);
-            this.treeData =rel;
-            console.log(this.treeData);
+            //const rel = res.data.menu.slice(0);
+
+            this.treeData =menutree_convert_checked(res.data.menu);
 
           }
         }).catch(err=>{
@@ -160,11 +162,12 @@
           alert(JSON.stringify(slected));
       },
       onCheckChange (slected) {
-        alert(2);
-        //console.log(slected);
-        console.log(this.$refs.tree.getCheckedNodes()); // 打勾的时候触发
 
-        console.log(this.$refs.tree.getSelectedNodes())
+        //console.log(slected);
+        //console.log(this.$refs.tree.getCheckedNodes()); // 打勾的时候触发
+        //console.log(this.$refs.tree.getSelectedNodes());
+
+        console.log(this.treeData);
       },
       /**
        * 选中结果包含父节点
@@ -175,21 +178,77 @@
         return this.mData;
       },
       submit(){
-        const data = this.$refs.tree.getCheckedNodes();
-        let rel = prase_tree(data);
+        //const data = this.$refs.tree.getCheckedNodes();
+
+        // copydata = $.extend(true, [], this.treeData)  js 深拷贝
+
+        function copy (obj) {   // 自定义二维数组深拷贝 https://www.cnblogs.com/lvonve/p/11334628.html
+
+          if (!obj){   // 排除 null
+            return
+          }
+
+          var newobj = obj.constructor === Array ? [] : {};
+          if(typeof obj !== 'object'){
+            return;
+          }
+          for(var i in obj){
+            newobj[i] = typeof obj[i] === 'object' ? copy(obj[i]) : obj[i];
+          }
+          return newobj
+        }
+
+        const copyobj = copy(this.treeData);
+        let rel = prase_tree(copyobj,this.tmp_roleid); // 避免修改原数据
 
         console.log(rel);
-        alert(rel);
+
+
+        save_role_menutree(rel).then(res=>{
+
+
+          if (res.success) {
+
+            //alert(JSON.stringify(res.data.menu));
+            //menutree_convert_checked(res.data.menu);
+
+            /*
+
+            js 中数组赋值给新数组，原来的数组的值也跟着变了 ？？？？？？
+            因此赋值的是引用。所以原数组值也变了。折腾了半天。
+
+             this.treeData =res.data.menu;
+
+             */
+            //const rel = res.data.menu.slice(0);
+
+            this.$Message.info({
+              content: '保存成功！',
+              duration: 10
+            });
+
+          }else{
+            alert("保存失败！")
+          }
+        }).catch(err=>{
+          alert(err);
+        });
+
 
 
       }
     },
     created () {
 
-      this.queryData();
+      //this.queryData();
       // if (!this.lazy) {
       //   this.queryData();
       // }
+    },
+    watch: {
+      roleid(newvalue,oldvalue) {
+        this.tmp_roleid = newvalue;
+      }
     },
     components: {}
   };

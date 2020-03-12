@@ -43,14 +43,24 @@
            :loading='editLoading'
            @on-ok='roleResEditOk'>
 
-      <DataTree
-                ref='resTree'
-                style='height:400px;overflow: auto'
-                dataUrl='/role_menu_tree/getmenutree'
-                :show-checkbox = 'showcheckbox'
-                :lazy='lazy'>
 
-      </DataTree>
+      <Tabs v-model='tab_name' type="card">
+        <TabPane label="角色菜单" name="resTree">
+          <DataTree
+            ref='resTree'
+            style='height:400px;overflow: auto'
+            dataUrl='/role_menu_tree/getmenutree'
+            :roleid='roleid'
+            :show-checkbox = 'showcheckbox'
+            :lazy='lazy'>
+
+          </DataTree>
+
+        </TabPane>
+        <TabPane label="角色API" name="apiTree">标签二的内容</TabPane>
+      </Tabs>
+
+
     </Modal>
 
     <div>
@@ -67,6 +77,9 @@
 
     </template>
   </Table>
+
+  <pageinfo v-if="showPage" :total="total"  :page="page" :pagesize="pageSize" v-on:queryData="getTableData"></pageinfo>
+
     </div>
 
   </div>
@@ -111,14 +124,19 @@
 </template>
 <script>
 
-  import { getroledata,roleadd,roledel } from '@/api/api'
+  import {getroledata, roleadd} from '@/api/api'
+  import common from '@/common/util'
   import DataTree from '@/component/tree/DataTree.vue'
+  import pageinfo from '@/component/page/pageinfo.vue'
+  //import DataTable from '@/component/table/DataTable.vue'
 
 
   export default {
     name:'role',
     data () {
       return {
+        showPage: false,
+        total:0,
         page: 0,
         pageSize: 0,
         searchInfo:{},
@@ -201,6 +219,8 @@
         editLoading: true,
         showcheckbox:true,
         lazy:false,
+        tab_name:'resTree',
+        roleid:'',
 
       }
     },
@@ -255,12 +275,19 @@
 
 
         //alert(JSON.stringify(searchInfo));
+        //alert(page + '-' + pageSize);
         getroledata({ page, pageSize, ...searchInfo }).then(res=>{
 
 
           if (res.success) {
 
-            this.data6 =res.data.list;
+            const tmp_data  =res.data.list;
+
+            for (let i=0;i<res.data.list.length;i++){
+              tmp_data[i].CreatedAt = common.formatDate.utcformat(tmp_data[i].CreatedAt, "yyyy-MM-dd HH:mm:ss")
+            }
+
+            this.data6 =tmp_data;
             this.total = res.data.total;
             this.page = res.data.page;
             this.pageSize = res.data.pageSize;
@@ -328,11 +355,19 @@
       tableDelData(){},
 
 
+      // 角色资源按钮
       roleResEdit(){
+        this.roleid = this.selections[0].authorityId;
+
+        this.$refs[this.tab_name].queryData('/role_menu_tree/getmenutree',this.roleid);
         this.editVisible = true;
       },
+
+      // 角色资源保存
       roleResEditOk(){
-        this.$refs.resTree.submit();
+        //this.$refs.resTree.submit();
+        this.$refs[this.tab_name].submit();
+        this.editVisible = false;
 
 
 
@@ -347,7 +382,7 @@
       // 页面加载时刷新表格
       this.getTableData()
     },
-    components: {DataTree}
+    components: {pageinfo, DataTree}
   }
 </script>
 

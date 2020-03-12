@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"study1/example-project/YunweiServer/model/modelInterface"
-	//"study1/example-project/YunweiServer/init/qmsql"
+	"study1/example-project/YunweiServer/init/qmsql"
 
-	"study1/example-project/YunweiServer/controller/servers"
+
+	//"study1/example-project/YunweiServer/controller/servers"
 )
 
 type Authority struct {
@@ -35,48 +36,87 @@ func (a *Authority) DeleteAuthority() (err error) {
 */
 
 // 分页获取数据  需要分页实现这个接口即可
-func (a *Authority) GetRoleList(info modelInterface.PageInfo) (err error, list interface{}, total int) {
+//func (a *Authority) GetRoleList(info modelInterface.PageInfo) (err error, list interface{}, total int) {
+//	// 封装分页方法 调用即可 传入 当前的结构体和分页信息
+//	err, db, total := servers.PagingServer(a, info)
+//	if err != nil {
+//		return
+//	} else {
+//		var authority []Authority
+//		err = db.Find(&authority).Error
+//		return err, authority, total
+//	}
+//}
+
+
+
+func (a *Authority) GetInfoList(info modelInterface.PageInfo) (err error, apiList []Authority, total int) {
 	// 封装分页方法 调用即可 传入 当前的结构体和分页信息
-	err, db, total := servers.PagingServer(a, info)
-	if err != nil {
-		return
-	} else {
-		var authority []Authority
-		err = db.Find(&authority).Error
-		return err, authority, total
+	//err, db, total := servers.PagingServer(a, info)
+	//if err != nil {
+	//	return
+	//} else {
+	//	var apiList []Authority
+	//
+	//	//err = qmsql.DEFAULTDB.Where("path LIKE ?", "%"+a.AuthorityName+"%").Find(&apiList).Count(&total).Error
+	//	//db.Where(&User{Name: "jinzhu", Age: 20}).First(&user) /// SELECT * FROM users ..
+	//
+	//
+	//	if  a.AuthorityId != ""  ||  a.AuthorityName != "" {
+	//
+	//		fmt.Println("true")
+	//		err = db.Where("authority_id = ?" , a.AuthorityId).Or("authority_name = ?",a.AuthorityName).Find(&apiList).Count(&total).Error
+	//
+	//
+	//	} else{
+	//		err = db.Find(&apiList).Count(&total).Error
+	//
+	//
+	//	}
+	//
+	//
+	//	if err!=nil{
+	//		return err, apiList, total
+	//	}
+	//	return nil, apiList, total
+	//}
+
+	var db *gorm.DB
+	if a.AuthorityId != ""  ||  a.AuthorityName != "" {
+		db = qmsql.DEFAULTDB.Model(&Authority{}).Where("authority_id = ?" , a.AuthorityId).Or("authority_name = ?",a.AuthorityName).Count(&total)
+	}else{
+		db = qmsql.DEFAULTDB.Model(&Authority{}).Count(&total)
+
+
 	}
-}
 
-
-
-func (a *Authority) GetInfoList(info modelInterface.PageInfo) (err error, list interface{}, total int) {
-	// 封装分页方法 调用即可 传入 当前的结构体和分页信息
-	err, db, total := servers.PagingServer(a, info)
-	if err != nil {
+	if err = db.Error;err!=nil{
+		fmt.Println("获取rolelist total失败！",err )
 		return
-	} else {
-		var apiList []Authority
-
-		//err = qmsql.DEFAULTDB.Where("path LIKE ?", "%"+a.AuthorityName+"%").Find(&apiList).Count(&total).Error
-		//db.Where(&User{Name: "jinzhu", Age: 20}).First(&user) /// SELECT * FROM users ..
-
-
-		if  a.AuthorityId != ""  ||  a.AuthorityName != "" {
-
-			fmt.Println("true")
-			err = db.Where("authority_id = ?" , a.AuthorityId).Or("authority_name = ?",a.AuthorityName).Find(&apiList).Count(&total).Error
-
-
-		} else{
-			err = db.Find(&apiList).Count(&total).Error
-
-
-		}
-
-
-		if err!=nil{
-			return err, apiList, total
-		}
-		return nil, apiList, total
 	}
+
+	limit := info.PageSize
+	offset := info.PageSize * (info.Page - 1)
+
+	if limit >0 {
+		// 客户端获取分页
+		err=db.Limit(limit).Offset(offset).Order("id ").Find(&apiList).Error
+	}else{
+		// 不获取分页
+		err=db.Order("id ").Find(&apiList).Error
+
+	}
+
+
+	if err!=nil{
+		fmt.Println("获取rolelist 分页失败！",err )
+		return
+	}
+
+	return
+
+
+
+
+
 }

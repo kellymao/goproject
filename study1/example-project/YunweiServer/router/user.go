@@ -6,14 +6,13 @@ import (
 	"study1/example-project/YunweiServer/middleware"
 )
 
-func InitMenuTreeRouter(Router *gin.Engine) {
-	BaseRouter := Router.Group("role_menu_tree")
+func InitUserRouter(Router *gin.Engine) {
+	BaseRouter := Router.Group("user")
 
 	//BaseRouter.POST("regist", api.Regist)
 	BaseRouter.Use(middleware.JWTAuth())
-	BaseRouter.POST("getmenutree", api.Get_menutree)
-	BaseRouter.POST("savemenutree", api.Save_menutree)
-
+	BaseRouter.POST("getuserlist", api.GetUserList)
 
 }
+
 

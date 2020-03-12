@@ -9,7 +9,7 @@ import (
 type Role_to_menu struct {
 
 	gorm.Model
-	Roleid string
+	Roleid string  `json:"roleid"`
 	Menuid  string `json:"menuId"`
 	Parentid string `json:"parentid"`
 
@@ -25,25 +25,59 @@ type Role_menu_tree struct{
 
 }
 
+func (m Role_menu_tree) Save() error {
 
+	err := m.Role_to_menu.Save()
+	if err!=nil{
+		return err
+	}
 
-func (m *Role_to_menu) Save (roleid string,menu []Role_to_menu) (err error) {
+	if len(m.Child) !=0 {
 
-
-	for i:=0; i < len(menu); i++ {
-
-		err = qmsql.DEFAULTDB.Save(&menu[i]).Error
-		if err!=nil {
-			fmt.Println("ERROR:", err)
-			return
+		for _, c :=range m.Child{
+			err = c.Save()
+			if err!=nil{
+				return err
+			}
 		}
+
+	}
+	return nil
+}
+
+func (m *Role_to_menu) Save () (err error) {
+
+
+	// 开启事务
+	tx := qmsql.DEFAULTDB.Begin()
+	tx.Delete(&Role_to_menu{},"roleid = ?  and menuid = ?",m.Roleid,m.Menuid) // 单条记录删除
+
+	/*
+	db.Where("cid=?",8).Delete(&Nxin{})
+
+	db.Delete(&Nxin{},"cid=?",9)
+	db.Model(&Nxin{}).Update("caddress","jp")
+
+	*/
+
+	err = tx.Save(m).Error
+	if err!=nil {
+			fmt.Println("ERROR:", err)
+			tx.Rollback()
+			return
 	}
 
 
-
+	tx.Commit()
 	return
 
 }
+
+func (m *Role_to_menu) Delete (roleid string) {
+	qmsql.DEFAULTDB.Delete(&Role_to_menu{},"roleid = ? ",roleid)
+}
+
+
 
 func (m *Role_to_menu)  Get_restree(roleid string) (restree []Role_menu_tree , err error){
 
@@ -172,7 +206,7 @@ func (m *Role_to_menu) Get_role_menutree(roleid string)([]SqlRes,error){
 	 */
 	var result []SqlRes
 	var sqlRes SqlRes
-	rows, err  := qmsql.DEFAULTDB.Raw("select (case  roleid is NULL when true  then 0 else 1 end ) as checked ,menus.id,menus.parent_id,name  from menus left join role_to_menus  on menus.id = role_to_menus.menuid and  role_to_menus.roleid =   ? where menus.parent_id =0", roleid).Rows()
+	rows, err  := qmsql.DEFAULTDB.Raw("select (case  roleid is NULL when true  then 0 else 1 end ) as checked ,menus.id,menus.parent_id,name  from menus left join role_to_menus  on menus.id = role_to_menus.menuid and  role_to_menus.roleid =   ?  and role_to_menus.deleted_at is null where menus.parent_id =0 order by menus.id", roleid).Rows()
 	//err:= row.Find(&sqlRes).Error
 
 	if err!=nil{
@@ -206,7 +240,7 @@ func (m *Role_to_menu) Get_role_menutree(roleid string)([]SqlRes,error){
 func Get_child_menutree(roleid string,r *SqlRes) error {
 
 	var child_sqlRes SqlRes
-	rows, err  := qmsql.DEFAULTDB.Raw("select (case  roleid is NULL when true  then 0 else 1 end ) as checked ,menus.id,menus.parent_id,name  from menus left join role_to_menus  on menus.id = role_to_menus.menuid and  role_to_menus.roleid =   ? where menus.parent_id =? ", roleid, r.Menuid).Rows()
+	rows, err  := qmsql.DEFAULTDB.Raw("select (case  roleid is NULL when true  then 0 else 1 end ) as checked ,menus.id,menus.parent_id,name  from menus left join role_to_menus  on menus.id = role_to_menus.menuid and  role_to_menus.roleid =   ?  and role_to_menus.deleted_at is null  where menus.parent_id =? order by menus.id", roleid, r.Menuid).Rows()
 	if err!=nil{
 		fmt.Println("获取child menutree 失败！	",err)
 		return err

@@ -14,7 +14,6 @@
         overflow: auto;
         background: #fff;
         border-radius: 4px;
-         height: 80%;
     }
     .layout-content-main{
         padding: 10px;
@@ -87,7 +86,7 @@
  
 </style>
 <template>
-    <div class="layout" :class="{'layout-hide-text': spanLeft < 5}">
+    <div class="layout" :class="{'layout-hide-text': spanLeft < 5}" style="overflow:auto;">
         <Row type="flex">
             <i-col :span="spanLeft" class="layout-menu-left">
                 <Menu :mode="modeType" theme="dark" width="auto" :active-name="this.$route.path" :open-names="openNames" @on-select="menuSelect" accordion>
@@ -102,7 +101,10 @@
                                 <span class="layout-text" >{{item.name}}</span>
                             </template>
                             <template v-for="(child,childIndex) in item.children" v-if="!child.hidden">
-                                <Menu-item :name="child.path">{{child.name}}</Menu-item>
+                                <Menu-item :name="child.path">
+                                  <Icon :type="child.iconCls" :size="iconSize"></Icon>
+                                  {{child.name}}
+                                </Menu-item>
                             </template>
                         </Submenu>
                         <template  v-if="item.leaf&&item.children.length>0">
@@ -133,10 +135,10 @@
                    </template>
                 </Menu>
             </i-col>
-            <i-col :span="spanRight">
+            <i-col :span="spanRight" >
                 <div class="layout-header">
                     <i-button type="text" @click="toggleClick">
-                        <Icon type="navicon" size="32"></Icon>
+                        <Icon type="ios-menu" size="32"></Icon>
                     </i-button>
                     <div class="userinfo">
                       <Dropdown placement="bottom-end">

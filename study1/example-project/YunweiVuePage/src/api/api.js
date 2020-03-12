@@ -42,7 +42,7 @@ export const getmenu = params =>{
 
 export const getroledata = (params) => {
 
-    alert(params);
+    //alert(params);
     return service({
         url: "/role/getrolelist",
         method: 'post',
@@ -70,11 +70,34 @@ export const roledel = (params) =>{
     })
 };
 
-export const get_role_menutree = (url) =>{
+export const get_role_menutree = (params) =>{
 
     return service({
-        url: url,
+        url: params.url,
         method: 'post',
+        data: params.roleid,
 
     })
 };
+
+
+export const save_role_menutree = (params) =>{
+
+  return service({
+    url: '/role_menu_tree/savemenutree',
+    method: 'post',
+    data: params
+
+  })
+};
+
+export const getuserdata = (params) => {
+
+  //alert(params);
+  return service({
+    url: "/user/getuserlist",
+    method: 'post',
+    data: params
+  })
+};
+

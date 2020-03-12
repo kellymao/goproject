@@ -1,0 +1,213 @@
+ <!--所有的格式
+
+
+                  -->
+                  <!--输入框-->
+                  <template v-if="item.type==='text'">
+                    <i-input
+                      type="text"
+                      v-model="fromData[item.name]"
+                      :placeholder="item.placeholder"
+                      :readonly="item.readonly"
+                      :disabled="item.disabled"
+                      :icon="item.icon"
+                      @on-click="(val) =>{ if( item.onClick!==null){item.onClick(fromData,mData)}}"
+                      :autosize="item.textarea">
+                    </i-input>
+                  </template>
+                  <!--数字输入框-->
+                  <template v-else-if="item.type==='number'">
+                    <input-number
+                      style="width:100%"
+                      v-model="fromData[item.name]"
+                      :readonly="item.readonly"
+                      :disabled="item.disabled"
+                      :icon="item.icon"
+                      :placeholder="item.placeholder"
+                      :max="item.max"
+                      :min="item.min"
+                      :editable="item.editable"
+                      :step="item.step||1"
+                      :precision="item.precision||0"
+                      @on-change="(val)=>{if(item.onChange!=null){item.onChange(val,fromData,mData)}}"
+                      :autosize="item.textarea">
+                    </input-number>
+                  </template>
+                  <!--选择框-->
+                  <template v-else-if="item.type==='popText'">
+                    <i-input
+                      type="text"
+                      v-model="fromData[item.textField]"
+                      :placeholder="item.placeholder"
+                      :disabled="item.disabled"
+                      :readonly="item.readonly == undefined ? true : item.readonly"
+                      icon="ios-search"
+                      @on-click="(val) =>{ if( item.onClick!==null){item.onClick(fromData,mData)}}"
+                      :autosize="item.textarea">
+                    </i-input>
+                  </template>
+                  <!--选择框-->
+                  <template v-else-if="item.type==='select'">
+                    <DataSelect v-model="fromData[item.name]"
+                                :data="item.data"
+                                :dict="item.dict"
+                                :param="item.param"
+                                :disabled="item.disabled"
+                                :dataUrl="item.dataUrl"
+                                :valField="item.valField"
+                                :textField="item.textField"
+                                :placeholder="item.placeholder"
+                                @on-change="(val)=>{if(item.onChange!=null){item.onChange(val,fromData,mData)}}"
+                                :multiple="item.multiple">
+                    </DataSelect>
+                  </template>
+                  <!--时间选择器-->
+                  <template v-else-if="item.type==='time'">
+                    <TimePicker
+                      transfer
+                      type="time"
+                      :disabled="item.disabled"
+                      :placeholder="item.placeholder"
+                      v-model="fromData[item.name]">
+                    </TimePicker>
+                  </template>
+                  <!--日期选择器-->
+                  <template v-else-if="item.type==='year'">
+                    <DatePicker
+                      transfer
+                      style="width:100%"
+                      type="year"
+                      format="yyyy"
+                      :disabled="item.disabled"
+                      :placeholder="item.placeholder"
+                      v-model="fromData[item.name]">
+                    </DatePicker>
+                  </template>
+                  <!--日期选择器-->
+                  <template v-else-if="item.type==='date'">
+                    <DatePicker
+                      transfer
+                      style="width:100%"
+                      type="date"
+                      :disabled="item.disabled"
+                      :placeholder="item.placeholder"
+                      v-model="fromData[item.name]">
+                    </DatePicker>
+                  </template>
+                  <!--日期选择器 yyyy-MM-dd HH:mm:ss-->
+                  <template v-else-if="item.type==='datetime'">
+                    <DatePicker
+                      transfer
+                      style="width:100%"
+                      type="datetime"
+                      format="yyyy-MM-dd HH:mm:ss"
+                      :disabled="item.disabled"
+                      :placeholder="item.placeholder"
+                      v-model="fromData[item.name]">
+                    </DatePicker>
+                  </template>
+                  <!--日期选择器 yyyy-MM-dd HH:mm:ss-->
+                  <template v-else-if="item.type==='datetimerange'">
+                    <DatePicker
+                      transfer
+                      style="width:100%"
+                      type="datetimerange"
+                      :format="item.format || 'yyyy-MM-dd HH:mm:ss'"
+                      :disabled="item.disabled"
+                      :placeholder="item.placeholder"
+                      v-model="fromData[item.name]">
+                    </DatePicker>
+                  </template>
+                  <!--多选框-->
+                  <template v-else-if="item.type==='checkbox'">
+                    <Checkbox v-if="item.enableCheckAll"
+                              :value="mData[item.name].checkAll"
+                              @click.prevent.native="handleCheckAll(item)">{{item.checkAllLabel}}
+                    </Checkbox>
+                    <CheckboxGroup v-model="fromData[item.name]" @on-change="checkGroupChange($event,item)">
+                      <Checkbox v-for="(option, optionIndex) in item.data "
+                                :label="option.value"
+                                transfer
+                                :key="'checkbox'+index+'_'+optionIndex">
+                        {{option.label}}
+                      </Checkbox>
+                    </CheckboxGroup>
+                  </template>
+                  <!--开关选项-->
+                  <template v-else-if="item.type==='switch'">
+                    <i-switch v-model="fromData[item.name]"
+                              size="large"
+                              :key="'switch'+index"
+                              :disabled="item.disabled"
+                              :trueValue="item.trueValue"
+                              @on-change="(val)=>{if(item.onChange!=null){item.onChange(val,fromData,mData)}}"
+                              :falseValue="item.falseValue">
+                      <span slot="open">{{item.openText}}</span>
+                      <span slot="close">{{item.closeText}}</span>
+                    </i-switch>
+                  </template>
+                  <!--单选框-->
+                  <template v-else-if="item.type==='radio'">
+                    <RadioGroup v-model="fromData[item.name]"
+                                :type="item.button?'button':null"
+                                @on-change="(val)=>{if(item.onChange!=null){item.onChange(val,fromData,mData)}}">
+                      <Radio v-for="(option, optionIndex) in item.data"
+                             :key="'radio'+index+'_'+optionIndex"
+                             :label="option.value==null?optionIndex:option.value">
+                        {{option.label}}
+                      </Radio>
+                    </RadioGroup>
+                  </template>
+                  <!--选择树-->
+                  <template v-else-if="item.type==='treeSelect'">
+                    <TreeSelect v-model="fromData[item.name]"
+                                :data="item.data"
+                                :disabled="item.disabled"
+                                :param="item.param"
+                                :valField="item.valField"
+                                :textField="item.textField"
+                                :lastStep="item.lastStep"
+                                :constructTree="item.constructTree"
+                                :dataUrl="item.dataUrl"
+                                @on-change="(val)=>{if(item.onChange!=null){item.onChange(val,data,fromData,mData)}}">
+                    </TreeSelect>
+                  </template>
+                  <!--图片上传-->
+                  <template v-else-if="item.type==='imgUpload'">
+                    <ImgUpload v-model="fromData[item.name]"
+                               :data="item.data"
+                               :param="item.param"
+                               :max="item.max"
+                               :disabled="item.disabled"
+                               :dataUrl="item.dataUrl">
+                    </ImgUpload>
+                  </template>
+
+                  <!--标签-->
+                  <template v-else-if="item.type==='label'">
+                    <span>{{item.data}}</span>
+                  </template>
+
+                  <!--按钮组-->
+                  <template v-else-if="item.type==='buttons'">
+                    <Button style="margin-left: 5px" v-for="(option, optionIndex) in item.data"
+                            :key="'button'+index+'_'+optionIndex"
+                            :type="option.btnType" :shape="option.shape"
+                            :icon="option.icon"
+                            :size="item.size"
+                            @click="onClick(fromData)">{{option.label}}
+                    </Button>
+                  </template>
+
+                  <!--富文本-->
+                  <template v-else-if="item.type==='editor'">
+                    <FormEditor v-model="fromData[item.name]" :placeholder="item.placeholder"></FormEditor>
+                  </template>
+
+
+                  <template v-else>
+                    {{item.type}}未匹配到对应的组件
+                  </template>
+
+
+

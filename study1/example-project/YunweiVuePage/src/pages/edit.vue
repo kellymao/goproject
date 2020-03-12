@@ -43,11 +43,7 @@
         computed: {},
         methods: {
             ok () {
-                this.$refs.dynamicForm.submit(() => {
-
-                }, (res) => {
-                    // 表单验证失败
-                });
+                this.$refs.dynamicForm.submit();
             },
             back () {
                 this.$router.go(-1);

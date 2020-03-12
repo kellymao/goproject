@@ -11,6 +11,8 @@
                           :rules="item.rules==null?null:item.rules"
                           :prop="item.name">
 
+
+                  <template v-if="item.type==='text'">
                     <i-input
                             type="text"
                             v-model="formData[item.name]"
@@ -24,6 +26,21 @@
                             -->
 
                     </i-input>
+                  </template>
+                  <template v-else-if="item.type==='select'">
+                    <i-select v-model="formData[item.name]" placeholder="请选择">
+
+<!--                      item.select_options = [-->
+<!--                      {title:"普通组",authorityId:"888"},-->
+<!--                      {title:"普通1组",authorityId:"999"}-->
+<!--                      ]-->
+
+                      <i-option v-for="i in item.select_options" :value="i.authorityId" >{{ i.title }}</i-option>
+
+                    </i-select>
+
+                  </template>
+
                 </FormItem>
 
             </i-col>
@@ -73,7 +90,7 @@
                     this.$set(this.formData, name, val);
                 }
 
-            }
+            },
         },
 
     }
