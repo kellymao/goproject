@@ -187,9 +187,14 @@
 </template>
 
 <script>
+  import store from '@/vuex/store'
+
+
     export default {
+
         data () {
             return {
+              isRouterAlive: true,
                 openNames: [this.$route.matched[0].name],
                 curUserName : localStorage.getItem('user').replace(/\"/g, ""),
                 modeType: "vertical",
@@ -231,6 +236,7 @@
             }
         },
         methods: {
+
             toggleClick () {
                 if (this.spanLeft === 5) {
                     this.spanLeft = 1;
@@ -244,7 +250,14 @@
                 this.modal1 = true;    
             },
             logout() {
-                this.$router.push('/login');
+              localStorage.removeItem('token');
+
+              //this.$router.options.routes = this.$router.options.routes.slice(0,1);
+              //store.dispatch('Loginout')
+              //console.log(this.$route);
+              //console.log(this.$router);
+              this.$router.push('/login');
+              location.reload()
             },
             comfirmModifyPS() {
                 return false;

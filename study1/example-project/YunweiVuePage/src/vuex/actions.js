@@ -53,7 +53,7 @@ export const  LoginIn = ({commit},loginInfo) => {
                 router.push({ path: redirect, replace: true });
 
             }else{
-                router.push({ path: '/table' });
+                router.push({ path: '/' });
 
             }
         }
@@ -68,7 +68,7 @@ export const  LoginIn = ({commit},loginInfo) => {
 export const  SetAsyncRouter = ({commit}) => {
 
 
-    getmenu().then(res=>{
+  getmenu().then(res=>{
 
 
 
@@ -121,3 +121,9 @@ export const  SetAsyncRouter = ({commit}) => {
 
 
 }
+
+
+// export const Loginout =({commit}) => {
+//   router.options.routes = router.options.routes.slice(0,1);
+//   router.push({ path: '/login' });
+// }

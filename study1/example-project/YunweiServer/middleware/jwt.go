@@ -7,6 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
 	"study1/example-project/YunweiServer/controller/servers"
+	"study1/example-project/YunweiServer/init/qmsql"
+
 	//"study1/example-project/YunweiServer/init/qmsql"
 	"time"
 )
@@ -46,14 +48,14 @@ func JWTAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		//var sqlRes SqlRes
-		//row := qmsql.DEFAULTDB.Raw("SELECT apis.path,api_authorities.authority_id,api_authorities.api_id,apis.id FROM apis INNER JOIN api_authorities ON api_authorities.api_id = apis.id 	WHERE apis.path = ? AND	api_authorities.authority_id = ?", c.Request.RequestURI, claims.AuthorityId)
-		//err = row.Scan(&sqlRes).Error
-		//if fmt.Sprintf("%v", err) == "record not found" {
-		//	servers.ReportFormat(c, false, "没有Api操作权限", gin.H{})
-		//	c.Abort()
-		//	return
-		//}
+		var sqlRes SqlRes
+		row := qmsql.DEFAULTDB.Raw("SELECT apis.path,role_to_apis.roleid,role_to_apis.apiid,apis.id FROM apis INNER JOIN role_to_apis ON role_to_apis.apiid = apis.id 	WHERE apis.path = ? AND	role_to_apis.roleid = ?", c.Request.RequestURI, claims.AuthorityId)
+		err = row.Scan(&sqlRes).Error
+		if fmt.Sprintf("%v", err) == "record not found" {
+			servers.ReportFormat(c, false, "没有Api操作权限", gin.H{})
+			c.Abort()
+			return
+		}
 		fmt.Println("auth验证已通过")
 		fmt.Printf("%+v",claims)
 		c.Set("claims", claims)

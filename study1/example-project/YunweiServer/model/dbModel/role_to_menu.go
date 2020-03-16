@@ -79,100 +79,100 @@ func (m *Role_to_menu) Delete (roleid string) {
 
 
 
-func (m *Role_to_menu)  Get_restree(roleid string) (restree []Role_menu_tree , err error){
-
-	// 得到了roleid = 888 的所有菜单权限。要求是要展示所有的菜单。有权限的打打钩
-
-	var result []Role_to_menu
-
-	err = qmsql.DEFAULTDB.Select("roleid,menuid,parentid").Where("roleid=? and parentid = 0 ",roleid).Find(&result).Error //delete_at 有值的不会显示出来
-	if err!=nil {
-		fmt.Println("ERROR:", err)
-		return
-	}
-
-
-
-	for i:=0;i<len(result);i++{
-
-		title,_:= get_title(result[i].Menuid)
-		child,_:= get_child(&result[i])
-		res:= Role_menu_tree{
-			result[i],
-			title,
-			child,
-
-
-		}
-
-		restree =append(restree,res)
-
-
-	}
-
-	return
-
-
-
-}
-
-func get_title(Menuid string) (title string ,err error ){
-
-	type T struct{
-		Name string
-	}
-
-	var rel  = T{}
-	fmt.Println(Menuid)
-	err = qmsql.DEFAULTDB.Model(&Menu{}).Select("name").Where("menuid=?  ",Menuid).Scan(&rel).Error //delete_at 有值的不会显示出来
-
-	if err!=nil{
-		fmt.Println("获取title失败！",err)
-		return
-	}
-
-	fmt.Printf("%+v \n",rel)
-	return rel.Name,nil
-
-}
-
-
-func get_child(r *Role_to_menu) (restree []Role_menu_tree , err error) {
-
-	var result []Role_to_menu
-
-	err = qmsql.DEFAULTDB.Select("roleid,menuid,parentid").Where("roleid=? and parentid = ? ",r.Roleid,r.Menuid).Find(&result).Error //delete_at 有值的不会显示出来
-
-	if err!=nil{
-		fmt.Println("获取child失败！",err)
-		return
-
-	}
-
-	if len(result) == 0 {
-		return
-	}
-
-	for i:=0;i<len(result);i++{
-
-		title,_:= get_title(result[i].Menuid)
-		child,_:= get_child(&result[i])
-		res:= Role_menu_tree{
-			result[i],
-			title,
-			child,
-
-		}
-
-		restree =append(restree,res)
-
-	}
-
-	return
-
-
-
-}
+//func (m *Role_to_menu)  Get_restree(roleid string) (restree []Role_menu_tree , err error){
+//
+//	// 得到了roleid = 888 的所有菜单权限。要求是要展示所有的菜单。有权限的打打钩
+//
+//	var result []Role_to_menu
+//
+//	err = qmsql.DEFAULTDB.Select("roleid,menuid,parentid").Where("roleid=? and parentid = 0 ",roleid).Find(&result).Error //delete_at 有值的不会显示出来
+//	if err!=nil {
+//		fmt.Println("ERROR:", err)
+//		return
+//	}
+//
+//
+//
+//	for i:=0;i<len(result);i++{
+//
+//		title,_:= get_title(result[i].Menuid)
+//		child,_:= get_child(&result[i])
+//		res:= Role_menu_tree{
+//			result[i],
+//			title,
+//			child,
+//
+//
+//		}
+//
+//		restree =append(restree,res)
+//
+//
+//	}
+//
+//	return
+//
+//
+//
+//}
+//
+//func get_title(Menuid string) (title string ,err error ){
+//
+//	type T struct{
+//		Name string
+//	}
+//
+//	var rel  = T{}
+//	fmt.Println(Menuid)
+//	err = qmsql.DEFAULTDB.Model(&Menu{}).Select("name").Where("menuid=?  ",Menuid).Scan(&rel).Error //delete_at 有值的不会显示出来
+//
+//	if err!=nil{
+//		fmt.Println("获取title失败！",err)
+//		return
+//	}
+//
+//	fmt.Printf("%+v \n",rel)
+//	return rel.Name,nil
+//
+//}
+//
+//
+//func get_child(r *Role_to_menu) (restree []Role_menu_tree , err error) {
+//
+//	var result []Role_to_menu
+//
+//	err = qmsql.DEFAULTDB.Select("roleid,menuid,parentid").Where("roleid=? and parentid = ? ",r.Roleid,r.Menuid).Find(&result).Error //delete_at 有值的不会显示出来
+//
+//	if err!=nil{
+//		fmt.Println("获取child失败！",err)
+//		return
+//
+//	}
+//
+//	if len(result) == 0 {
+//		return
+//	}
+//
+//	for i:=0;i<len(result);i++{
+//
+//		title,_:= get_title(result[i].Menuid)
+//		child,_:= get_child(&result[i])
+//		res:= Role_menu_tree{
+//			result[i],
+//			title,
+//			child,
+//
+//		}
+//
+//		restree =append(restree,res)
+//
+//	}
+//
+//	return
+//
+//
+//
+//}
 
 
 

@@ -35,7 +35,7 @@
 <!--                      {title:"普通1组",authorityId:"999"}-->
 <!--                      ]-->
 
-                      <i-option v-for="i in item.select_options" :value="i.authorityId" >{{ i.title }}</i-option>
+                      <i-option v-for="i in item.select_options" :value="i.authorityId" :key="i.authorityId" >{{ i.title }}</i-option>
 
                     </i-select>
 

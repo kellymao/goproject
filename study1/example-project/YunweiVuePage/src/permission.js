@@ -7,6 +7,7 @@ router.beforeEach((to, from, next) => {
     if (to.path == '/login') {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
+        asyncRouterFlag = false;
     }
 
     // asyncRouterFlag++ // 浏览器每次打开一个新页面或者刷新页面，就从0 开始重新计数。 在同一页面里面点不同的菜单是直接+1，不重新计数

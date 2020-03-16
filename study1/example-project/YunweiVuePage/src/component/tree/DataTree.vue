@@ -74,8 +74,9 @@
       /**
        * 获取数据
        */
-      queryData (url=this.dataUrl,roleid=this.roleid) {
+      queryData (roleid=this.roleid,url=this.dataUrl) {
 
+        alert(url +'-'+roleid);
         // const data3 = [
         //   {
         //     id: 2,

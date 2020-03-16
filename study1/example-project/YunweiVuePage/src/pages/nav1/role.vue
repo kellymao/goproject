@@ -44,7 +44,7 @@
            @on-ok='roleResEditOk'>
 
 
-      <Tabs v-model='tab_name' type="card">
+      <Tabs v-model='tab_name' type="card" @on-click="clicktab">
         <TabPane label="角色菜单" name="resTree">
           <DataTree
             ref='resTree'
@@ -57,7 +57,23 @@
           </DataTree>
 
         </TabPane>
-        <TabPane label="角色API" name="apiTree">标签二的内容</TabPane>
+        <TabPane label="角色API" name="apiTree">
+
+          <DataApiTree
+            ref='apiTree'
+            style='height:400px;overflow: auto'
+            dataUrl='/api/getallapis'
+            checkedUrl="/role_to_api/getapilist"
+            :roleid='roleid'
+            :show-checkbox = 'showcheckbox'
+            :lazy='lazy'>
+
+          </DataApiTree>
+
+
+
+
+        </TabPane>
       </Tabs>
 
 
@@ -128,6 +144,8 @@
   import common from '@/common/util'
   import DataTree from '@/component/tree/DataTree.vue'
   import pageinfo from '@/component/page/pageinfo.vue'
+  import DataApiTree from '@/component/tree/DataApiTree.vue'
+
   //import DataTable from '@/component/table/DataTable.vue'
 
 
@@ -358,9 +376,13 @@
       // 角色资源按钮
       roleResEdit(){
         this.roleid = this.selections[0].authorityId;
+        this.tab_name = 'resTree';    //每次点资源时，设置当前标签页为resTree
+        this.clicktab(this.tab_name);  //每次点资源时，初始化所选角色的对应 roleid 的数据
+        //this.$refs[this.tab_name].queryData('/role_menu_tree/getmenutree',this.roleid);
 
-        this.$refs[this.tab_name].queryData('/role_menu_tree/getmenutree',this.roleid);
         this.editVisible = true;
+
+
       },
 
       // 角色资源保存
@@ -373,6 +395,11 @@
 
       },
 
+      clicktab(name){
+        alert('click-'+name + '-' + this.selections[0].authorityId);
+        this.tab_name=name;
+        this.$refs[name].queryData(this.selections[0].authorityId);
+      }
 
 
 
@@ -382,7 +409,7 @@
       // 页面加载时刷新表格
       this.getTableData()
     },
-    components: {pageinfo, DataTree}
+    components: {pageinfo, DataTree,DataApiTree}
   }
 </script>
 

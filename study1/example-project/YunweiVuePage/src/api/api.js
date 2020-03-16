@@ -101,3 +101,52 @@ export const getuserdata = (params) => {
   })
 };
 
+
+
+
+export const getapidata = (params) => {
+
+  //alert(params);
+  return service({
+    url: "/api/getapilist",
+    method: 'post',
+    data: params
+  })
+};
+
+
+// 获取所有的api 列表
+export const getallapis = (params) => {
+
+  //alert(params);
+  return service({
+    url: "/api/getallapis",
+    method: 'post',
+    data: params
+  })
+};
+
+
+export const getroleapis = (params) => {
+
+  //alert(params);
+  return service({
+    url: "/role_to_api/getapilist",
+    method: 'post',
+    data: params
+  })
+};
+
+
+export const saveroleapis = (params) => {
+
+  //alert(params);
+  return service({
+    url: "/role_to_api/saveapilist",
+    method: 'post',
+    data: params
+  })
+};
+
+
+

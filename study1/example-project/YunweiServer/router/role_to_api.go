@@ -7,12 +7,14 @@ import (
 )
 
 // token 过期认证以及api认证 中间件
-func InitApiRouter(Router *gin.Engine) {
-	BaseRouter := Router.Group("api")
+func InitApiTreeRouter(Router *gin.Engine) {
+	BaseRouter := Router.Group("role_to_api")
 
 	//BaseRouter.POST("regist", api.Regist)
 	BaseRouter.Use(middleware.JWTAuth())
-	BaseRouter.POST("getapilist", api.GetApiList)
-	BaseRouter.POST("getallapis",api.GetAllapis)
+	BaseRouter.POST("getapilist", api.GetApi_list)
+	BaseRouter.POST("saveapilist", api.SaveApi_list)
+
 
 }
+

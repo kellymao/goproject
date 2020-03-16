@@ -5,6 +5,7 @@ import (
 	"study1/example-project/YunweiServer/init/qmsql"
 )
 
+var ids []string
 
 
 
@@ -35,8 +36,23 @@ func (m *Menu) TestMenu() []Menu {
 
 func (m *Menu) GetMenu (id string) (result []Menu,err error) {
 
+	rows,err := qmsql.DEFAULTDB.Model(&Role_to_menu{}).Select("menuid").Where("roleid=? ",id).Rows() // 先取出该角色可以访问的menu_id
 
-	err = qmsql.DEFAULTDB.Where("authority_id=? and parent_id = 0 ",888).Find(&result).Error //delete_at 有值的不会显示出来
+
+	if err!=nil{
+		return
+	}
+	defer rows.Close()
+
+
+	var scan_id string
+
+	for rows.Next() {
+		_ = rows.Scan(&scan_id)
+		ids = append(ids,scan_id)
+	}
+
+	err = qmsql.DEFAULTDB.Where("menuid in (?) and parent_id = 0 ",ids).Find(&result).Error //delete_at 有值的不会显示出来
 	if err!=nil {
 		fmt.Println("ERROR:", err)
 		return
@@ -71,7 +87,8 @@ func (m *Menu) GetMenu (id string) (result []Menu,err error) {
 func (m *Menu) GetChildMenu(parent_menu *Menu)( err error)  {
 
 	var child_menu []Menu
-	err = qmsql.DEFAULTDB.Where("authority_id=? and parent_id = ? ",parent_menu.AuthorityId , parent_menu.Menuid).Find(&child_menu).Error
+	//err = qmsql.DEFAULTDB.Where("authority_id=? and parent_id = ? ",parent_menu.AuthorityId , parent_menu.Menuid).Find(&child_menu).Error
+	err = qmsql.DEFAULTDB.Where("menuid in (?) and parent_id = ? ", ids,parent_menu.Menuid).Find(&child_menu).Error
 
 	if err!=nil{
 		return
