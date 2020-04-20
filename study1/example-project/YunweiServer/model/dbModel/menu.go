@@ -5,7 +5,6 @@ import (
 	"study1/example-project/YunweiServer/init/qmsql"
 )
 
-var ids []string
 
 
 
@@ -47,6 +46,9 @@ func (m *Menu) GetMenu (id string) (result []Menu,err error) {
 
 	var scan_id string
 
+	var ids []string
+
+
 	for rows.Next() {
 		_ = rows.Scan(&scan_id)
 		ids = append(ids,scan_id)
@@ -69,7 +71,7 @@ func (m *Menu) GetMenu (id string) (result []Menu,err error) {
 
 	for i:=0 ; i<len(result); i++ {
 
-		err = m.GetChildMenu(&result[i])
+		err = m.GetChildMenu(&result[i],ids)
 		if err!=nil{
 			fmt.Println("ERROR:", err)
 
@@ -77,14 +79,13 @@ func (m *Menu) GetMenu (id string) (result []Menu,err error) {
 		}
 	}
 
-	//fmt.Printf("返回： %+v\n", result)
 	return
 
 }
 
 
 
-func (m *Menu) GetChildMenu(parent_menu *Menu)( err error)  {
+func (m *Menu) GetChildMenu(parent_menu *Menu,ids []string)( err error)  {
 
 	var child_menu []Menu
 	//err = qmsql.DEFAULTDB.Where("authority_id=? and parent_id = ? ",parent_menu.AuthorityId , parent_menu.Menuid).Find(&child_menu).Error
@@ -93,6 +94,9 @@ func (m *Menu) GetChildMenu(parent_menu *Menu)( err error)  {
 	if err!=nil{
 		return
 	}
+
+	//fmt.Println("========",parent_menu.Menuid)
+	//fmt.Printf("%+v\n",ids)
 
 	if len(child_menu) == 0 {
 
@@ -103,7 +107,7 @@ func (m *Menu) GetChildMenu(parent_menu *Menu)( err error)  {
 
 	for i:=0 ; i<len(parent_menu.Children); i++ {
 
-		err = m.GetChildMenu(&parent_menu.Children[i])
+		err = m.GetChildMenu(&parent_menu.Children[i],ids)
 		if err!=nil{
 			fmt.Println("ERROR:", err)
 

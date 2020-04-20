@@ -49,8 +49,10 @@ func JWTAuth() gin.HandlerFunc {
 			return
 		}
 		var sqlRes SqlRes
+		fmt.Println(c.Request.RequestURI)
 		row := qmsql.DEFAULTDB.Raw("SELECT apis.path,role_to_apis.roleid,role_to_apis.apiid,apis.id FROM apis INNER JOIN role_to_apis ON role_to_apis.apiid = apis.id 	WHERE apis.path = ? AND	role_to_apis.roleid = ?", c.Request.RequestURI, claims.AuthorityId)
 		err = row.Scan(&sqlRes).Error
+		fmt.Println(err)
 		if fmt.Sprintf("%v", err) == "record not found" {
 			servers.ReportFormat(c, false, "没有Api操作权限", gin.H{})
 			c.Abort()
